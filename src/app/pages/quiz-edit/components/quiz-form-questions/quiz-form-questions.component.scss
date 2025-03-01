@@ -1,0 +1,17 @@
+.questions {
+  &__header {
+    display: flex;
+    margin-bottom: 3rem;
+   
+    & > * {
+      margin-right: 3rem;
+    }
+  }
+
+  .questions__details {
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    margin-bottom: 1rem;
+  }
+}
