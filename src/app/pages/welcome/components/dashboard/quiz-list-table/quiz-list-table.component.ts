@@ -14,10 +14,18 @@ import { RouterLink } from '@angular/router';
 })
 export class QuizListTableComponent {
   displayedColumns: string[] = ['title', 'actions'];
-  @Input() quizzes!: Quiz[]  ;
+  
+  @Input() quizzes!: Quiz[];
   @Output() startQuiz = new EventEmitter<string>();
+  @Output() deleteQuiz = new EventEmitter<string>(); // Emit quiz ID when deleting
 
   onStartQuiz(url: string) {
     this.startQuiz.emit(url);
+  }
+
+  onDeleteQuiz(id: string) {
+    if (confirm(`Are you sure you want to delete quiz n°${id}?`)) {
+      this.deleteQuiz.emit(id);
+    }
   }
 }
