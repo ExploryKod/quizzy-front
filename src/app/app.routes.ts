@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { WelcomePageComponent } from './pages/welcome/welcome-page.component';
 
+
 export const appRoutes: Route[] = [
   {
     path: '',
@@ -25,10 +26,6 @@ export const appRoutes: Route[] = [
   {
     path: 'register',
     loadChildren: () => import('./pages/register/register.routes').then(m => m.registerRoutes)
-  },
-  {
-    path: 'chat',
-    loadChildren: () => import('./pages/chat/chat.routes').then(m => m.chatRoutes)
   },
   {
     path: '**',

@@ -1,0 +1,53 @@
+<div class="chat">
+    <div class="chat-header">
+      <span>Chat</span>
+    </div>
+  
+    @if(messages.length > 0) {
+      <div class="chat-message-list">
+        @for (message of messages; track message.id) {
+          <div class="chat-message" [ngClass]="{ 'outgoing': message.author === username, 'incoming': message.author !== username }">
+         
+            <div class="chat-message-wrapper">
+              <span class="chat-message-author">{{ message.author }}</span>
+              <div class="chat-message-bubble">
+                <span class="chat-message-body">{{ message.body }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="info">No messages yet. Start the conversation!</div>
+    }
+  
+    <!-- ✅ Reactive Form Input -->
+    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="chat-form">
+      <div class="input-group">
+      <mat-form-field class="full-width">
+        <input 
+          matInput
+          class="chat-form__input"
+          type="text"
+          formControlName="message"
+          placeholder="Type a message..."
+          [ngClass]="{ 'form-control--error': messageInput?.errors && messageInput?.touched }"
+        />
+     
+      </mat-form-field>
+      <button 
+      mat-raised-button 
+      color="primary" 
+      type="submit" 
+      [disabled]="chatForm.invalid"
+    >
+      Envoyer
+    </button>
+  
+    </div>
+      <div *ngIf="messageInput?.errors?.['required'] && messageInput?.touched" class="form-error">
+        Le message doit exister
+      </div>
+    </form>
+  </div>
+  

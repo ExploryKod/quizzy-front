@@ -2,6 +2,10 @@ import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
 import { SocketInterface } from './socket.interface';
 
+import { Injectable } from '@angular/core';
+@Injectable({
+  providedIn: 'root',
+})
 export class SocketIoService implements SocketInterface {
   constructor(private socket: Socket) {}
 
