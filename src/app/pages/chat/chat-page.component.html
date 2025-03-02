@@ -1,0 +1,31 @@
+<div class="chat-page page">
+    <div class="chat-header">
+      <span>Nest Chat App</span>
+      <button class="button" (click)="logout()">Logout</button>
+    </div>
+  
+    @if(messages.length > 0) {
+      <div class="chat-message-list">
+        @for (message of messages; track message.id) {
+          <div class="chat-message" @if (currentUser === message.author) class="outgoing">
+            <div class="chat-message-wrapper">
+              <span class="chat-message-author">{{ message.author }}</span>
+              <div class="chat-message-bubble">
+                <span class="chat-message-body">{{ message.body }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="info">No messages yet. Start the conversation!</div>
+    }
+  
+    <div class="chat-composer">
+      <input class="chat-composer-input" 
+             placeholder="Type message here" 
+             [(ngModel)]="inputValue" 
+             (keydown)="sendMessage($event)" />
+    </div>
+  </div>
+  

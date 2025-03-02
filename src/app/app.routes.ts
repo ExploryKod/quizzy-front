@@ -27,6 +27,10 @@ export const appRoutes: Route[] = [
     loadChildren: () => import('./pages/register/register.routes').then(m => m.registerRoutes)
   },
   {
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.routes').then(m => m.chatRoutes)
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: ''
