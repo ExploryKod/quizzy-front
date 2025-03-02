@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { WelcomePageComponent } from './pages/welcome/welcome-page.component';
 
+
 export const appRoutes: Route[] = [
   {
     path: '',

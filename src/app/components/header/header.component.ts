@@ -24,6 +24,7 @@ export class HeaderComponent {
   isLoggedIn$ = this.authService.isLogged$;
   userDetails$ = this.authService.userDetails$;
 
+
   logout() {
     this.authService.logout();
   }
