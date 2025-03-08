@@ -15,6 +15,7 @@ export class JoinQuizPageComponent implements OnInit {
   status$ = this.quizJoinService.status$.pipe(tap(console.log));
   quizDetails?: ClientJoinDetails;
   question$ = this.quizJoinService.question$;
+
   @Input() id!: string;
 
   async ngOnInit() {

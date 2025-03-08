@@ -29,6 +29,7 @@ export class HostQuizPageComponent implements OnInit {
       this.currentStatus = status;
     });
     this.hostQuizService.hostDetails$.subscribe((details) => {
+      console.log('host details', details);
       this.quiz = details.quiz;
     });
     this.hostQuizService.connect(this.id);

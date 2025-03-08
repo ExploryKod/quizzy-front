@@ -2,21 +2,21 @@
   <h2> Hosting quiz : @if (quiz) {
     {{quiz.title}}
   }</h2>
-
-  <div class="quiz-host__share">
+<div class="quiz-host__text-wrapper">
+  <div class="text-wrapper__share">
     Share the fun with code: <em>{{id}}</em>
   </div>
 
-  <div class="quiz-host__status">
+  <div class="text-wrapper__status">
     @if (currentStatus) {
-      <div> Status: {{currentStatus.status}}</div>
-      <div> Participants: {{currentStatus.participants}}</div>
+      <div> Status: <span [ngClass]="currentStatus.status">{{currentStatus.status}}</span></div>
+      <div> Participants: <span>{{currentStatus.participants}}</span></div>
     } @else {
       <div class="alert"> Status: Unknown</div>
     }
 
   </div>
-
+</div>
   <div class="quiz-host-start">
     <button mat-raised-button color="primary" (click)="nextQuestion()">Next question</button>
   </div>

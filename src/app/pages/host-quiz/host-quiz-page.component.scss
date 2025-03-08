@@ -1,4 +1,40 @@
 .quiz-host {
   font-size: 1.6rem;
   padding: 4rem;
+
+  &__text-wrapper {
+    margin: 2rem 0;
+    max-width: 800;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .text-wrapper {
+    &__status {
+      display: flex;
+      gap: 2rem;
+      font-weight: 500;
+      margin: 1rem 0;
+      color: var(--color-text-primary);
+
+      div:nth-of-type(1) {
+        span {
+          &.waiting {
+            color: blueviolet;
+          }
+          &.starting {
+            color: green
+          }
+        }
+      }
+    }
+    &__share {
+      em {
+        color: var(--color-primary);
+        font-weight: 500;
+        font-size: 18px;
+      }
+    }
+  }
 }
