@@ -11,6 +11,7 @@
   }
 
   .text-wrapper {
+
     &__status {
       display: flex;
       gap: 2rem;
@@ -18,6 +19,10 @@
       margin: 1rem 0;
       color: var(--color-text-primary);
 
+      .alert {
+        margin: 0;
+      }
+  
       div:nth-of-type(1) {
         span {
           &.waiting {

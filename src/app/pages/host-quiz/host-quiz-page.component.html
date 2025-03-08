@@ -1,24 +1,32 @@
 <div class="quiz-host page">
+  @if (currentStatus) {
   <h2> Hosting quiz : @if (quiz) {
     {{quiz.title}}
   }</h2>
+} @else {
+  <h2> No quiz is being hosted </h2>
+}
 <div class="quiz-host__text-wrapper">
+  @if (currentStatus) {
   <div class="text-wrapper__share">
     Share the fun with code: <em>{{id}}</em>
   </div>
+  }
 
   <div class="text-wrapper__status">
     @if (currentStatus) {
       <div> Status: <span [ngClass]="currentStatus.status">{{currentStatus.status}}</span></div>
       <div> Participants: <span>{{currentStatus.participants}}</span></div>
     } @else {
-      <div class="alert"> Status: Unknown</div>
+      <div class="alert"> Status: unknown</div>
     }
 
   </div>
 </div>
+@if (currentStatus) {
   <div class="quiz-host-start">
     <button mat-raised-button color="primary" (click)="nextQuestion()">Next question</button>
   </div>
+}
 </div>
 
