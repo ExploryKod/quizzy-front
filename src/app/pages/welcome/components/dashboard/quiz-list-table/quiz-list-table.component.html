@@ -14,7 +14,6 @@
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">
       <a [routerLink]="'/quiz/'+element.id"><mat-icon class="action-icon">edit</mat-icon></a>
-      <mat-icon (click)="onDeleteQuiz(element.id)" class="action-icon">delete</mat-icon>
       @if (element._links?.start) {
         <mat-icon (click)="onStartQuiz(element._links.start)" class="action-icon">play_circle</mat-icon>
       }
