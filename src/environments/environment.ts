@@ -1,6 +1,7 @@
 export const environment = {
   baseUrl: '<SET ME UP>',
   apiUrl: '<SET ME UP>',
+  authType: 'JWT', // 'JWT' or 'FIREBASE' - default to JWT
   // You will need to create a Firebase project and replace the configuration here with yours
   firebase : {
     apiKey: '<TODO>',
@@ -9,6 +10,6 @@ export const environment = {
     storageBucket: '<TODO>',
     messagingSenderId: '<TODO>',
     appId: '<TODO>',
-  }, useSocketIo: true
-
+  }, 
+  useSocketIo: true
 };

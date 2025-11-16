@@ -99,7 +99,7 @@ export const fr = {
     },
     dashboard: {
       title: 'Vos Quiz',
-      errorLoadingQuizzes: 'Erreur lors du chargement des questionnaires - le backend ne répond pas.',
+      errorLoadingQuizzes: 'Erreur lors du chargement des questionnaires. Veuillez vous reconnecter.',
       createQuiz: 'Nouveau Quiz',
       loading: 'Chargement des quizz en cours...',
       empty: 'Vous n\'avez pas encore de quiz. Créez-en un !',

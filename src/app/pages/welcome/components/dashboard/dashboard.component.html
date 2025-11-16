@@ -7,7 +7,7 @@
     <div class="dashboard__quizzes">
       @if (quizzes.status === 'OK') {
         <qzy-quiz-list [quizzes]="quizzes" (createQuiz)="createQuiz()" (startQuiz)="startQuiz($event)" ></qzy-quiz-list>
-      } @else {
+      } @else if (quizzes.status === 'ERROR') {
         <div class="dashboard__error">
           {{ 'welcomePage.dashboard.errorLoadingQuizzes' | translate }}
         </div>

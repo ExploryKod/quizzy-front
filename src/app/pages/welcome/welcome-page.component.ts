@@ -16,6 +16,6 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class WelcomePageComponent {
   private readonly authService = inject(AuthService);
-  isLogged$ = this.authService.user$;
+  isLogged$ = this.authService.isLogged$;
 
 }

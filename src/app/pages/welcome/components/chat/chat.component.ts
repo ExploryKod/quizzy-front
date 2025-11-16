@@ -28,23 +28,21 @@ interface Message {
 export class ChatComponent implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
 
-  chatForm!: FormGroup;
+  chatForm: FormGroup;
   username: string = "";
   private chatSubscription!: Subscription;
 
   constructor(private fb: FormBuilder, private socketService: SocketIoService) {
+    // Initialize FormGroup in constructor to avoid template errors
+    this.chatForm = this.fb.group({
+      message: ['', [Validators.required, Validators.minLength(1)]],
+    });
   }
 
   messages: Message[] = [{ id: 1, body: `Bienvenue chez Quizzy`, author: "" }];
   async ngOnInit() {
-
     const details = await firstValueFrom(this.authService.userDetails$);
     this.username = details?.username || "";
-   
-    // ✅ Initialize FormGroup
-    this.chatForm = this.fb.group({
-      message: ['', [Validators.required, Validators.minLength(1)]],
-    });
 
     // ✅ Listen for incoming messages
     this.chatSubscription = this.socketService.listenToEvent<Message>('chat')

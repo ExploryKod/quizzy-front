@@ -45,7 +45,13 @@ export class QuizService {
         }
       }),
       map((response): QuizListResponse => ({ status: 'OK' , data: response.data, isCreateQuizLinkAvailable: !!response._links?.create })),
-      catchError((): Observable<QuizListResponse> => of({ status: 'ERROR', data: [], isCreateQuizLinkAvailable: false })));
+      catchError((error): Observable<QuizListResponse> => {
+        // Distinguish between authentication errors and other errors
+        if (error.status === 401) {
+          console.warn('Authentication required to load quizzes');
+        }
+        return of({ status: 'ERROR', data: [], isCreateQuizLinkAvailable: false });
+      }));
   }
 
   create() {
