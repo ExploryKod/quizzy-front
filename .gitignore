@@ -40,3 +40,22 @@ Thumbs.db
 
 .nx/cache
 .angular
+
+# Environment variables
+.env
+.env.*
+!.env.example
+.env.local
+.env.development.local
+.env.production.local
+
+# Firebase credentials
+**/firebase*key*.json
+**/*firebase*key*.json
+**/google-services.json
+**/GoogleService-Info.plist
+
+# Secrets and credentials
+**/secrets/
+**/*secret*
+**/*credential*
