@@ -1,7 +1,7 @@
 <header class="header">
-  <mat-toolbar color="primary" class="header__toolbar">
+  <div class="header__toolbar" role="navigation" aria-label="Main">
     <div class="header__logo">
-      <a routerLink="/" title="Go home"><img src="/assets/logo.png" class="header__logo-img" alt="Quizzy logo" /></a>
+      <a routerLink="/" title="Go home"><img src="/assets/logo-white.png" class="header__logo-img" alt="Quizzy logo" /></a>
     </div>
     <div><a routerLink="/" class="header__title" title="Go home">{{ 'appName' | translate }}</a></div>
     <div class="header__placeholder">&nbsp;</div>
@@ -9,33 +9,38 @@
       @if ((pingStatus$ | async); as pingStatus) {
         @switch (pingStatus){
           @case (PingStatus.KO) {
-            <mat-icon [matTooltip]="'header.statusTooltip.ko' | translate" class="header__status header__status--ko">error</mat-icon>
+            <span class="material-icons header__status header__status--ko" [attr.title]="'header.statusTooltip.ko' | translate">error</span>
           }
           @case (PingStatus.Partial) {
-            <mat-icon [matTooltip]="'header.statusTooltip.partial' | translate" class="header__status header__status--partial">warning</mat-icon>
+            <span class="material-icons header__status header__status--partial" [attr.title]="'header.statusTooltip.partial' | translate">warning</span>
           }
           @case (PingStatus.Full) {
-            <mat-icon [matTooltip]="'header.statusTooltip.ok' | translate" class="header__status header__status--full">check_circle</mat-icon>
+            <span class="material-icons header__status header__status--full" [attr.title]="'header.statusTooltip.ok' | translate">check_circle</span>
           }
         }
       } @else {
-          <mat-icon [matTooltip]="'header.statusTooltip.pending' | translate" class="header__status header__status--unknown">pending</mat-icon>
+        <span class="material-icons header__status header__status--unknown" [attr.title]="'header.statusTooltip.pending' | translate">pending</span>
       }
     </div>
     @if(isLoggedIn$ | async) {
       <div class="header__user">
-        <mat-icon class="header__user--icon" [matMenuTriggerFor]="menu">account_circle</mat-icon>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="logout()">Logout</button>
-        </mat-menu>
+        <details class="header__user-menu" #userMenu>
+          <summary class="header__user-summary">
+            <span class="material-icons header__user--icon" aria-hidden="true">account_circle</span>
+            <span class="visually-hidden">{{ 'header.userMenu' | translate }}</span>
+          </summary>
+          <div class="header__user-dropdown">
+            <button type="button" class="header__logout" (click)="logout(userMenu)">Logout</button>
+          </div>
+        </details>
         <div>
         @if (userDetails$ | async; as user) {
           {{user.username}}
           } @else {
-          <div [matTooltip]="'header.userMissing' | translate"> ??? </div>
+          <span [attr.title]="'header.userMissing' | translate"> ??? </span>
           }
         </div>
       </div>
     }
-  </mat-toolbar>
+  </div>
 </header>

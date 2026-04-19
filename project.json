@@ -72,6 +72,13 @@
       },
       "defaultConfiguration": "development"
     },
+    "serve-once": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "quizzy-front:build:development",
+        "watch": false
+      }
+    },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {

@@ -10,7 +10,8 @@ export const fr = {
       ok: 'Le serveur est en ligne !',
       pending: 'Vérification du statut serveur...'
     },
-    userMissing: 'Utilisateur inconnu (issue #4)'
+    userMissing: 'Utilisateur inconnu (issue #4)',
+    userMenu: 'Menu du compte'
   },
   quiz: {
     defaultTitle: 'Nouveau Quiz',

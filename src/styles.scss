@@ -8,7 +8,7 @@
 
 :root {
 
-  --color-primary : #3f51b5;
+  --color-primary : #7d3780;
   --color-paper-lighter: #f7f4e3;
   --color-paper: #f2eecb;
   --color-paper-darker: #e6e1b3;
@@ -18,7 +18,7 @@
 
   --color-text: #111;
   --color-text-darker: #000;
-  --color-text-secondary : white;
+  --color-text-secondary : #fefefe;
 
   --color-error: #9a1d1d;
   --color-error-background: #ffb2b2;
@@ -27,8 +27,11 @@
   --color-success-border: #14a914;
 
   --color-primary-background : #a4a8c0;
+  --color-cta-yellow: #e9bd43;
 
   --container-maxw: 1200px;
+  
+  --border-radius-header: 3rem;
 }
 
 html {
