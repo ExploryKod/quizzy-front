@@ -25,6 +25,9 @@ export class RegisterPageComponent {
   private readonly registerService = inject(RegisterService);
   private readonly router = inject(Router);
 
+  /** Server / network errors from last submit. */
+  submitErrors: string[] = [];
+
   @Output() register = new EventEmitter<RegisterData>();
 
   registerForm: FormGroup;
@@ -54,18 +57,23 @@ export class RegisterPageComponent {
   }
 
   doRegister() {
-    this.registerService.register(this.registerForm.value.username, this.registerForm.value.email, this.registerForm.value.password)
-      .pipe(take(1)).subscribe((result) => {
+    this.submitErrors = [];
+    this.registerService
+      .register(
+        this.registerForm.value.username,
+        this.registerForm.value.email,
+        this.registerForm.value.password
+      )
+      .pipe(take(1))
+      .subscribe((result) => {
         if (result.isSuccess) {
+          const { email, password } = this.registerForm.value;
+          this.register.emit({ email, password });
           this.router.navigateByUrl('');
+          return;
         }
-        else {
-          alert(result.errors.join('\n'));
-        }
-    });
-
-    const { email, password } = this.registerForm.value;
-    this.register.emit({ email, password });
+        this.submitErrors = result.errors?.length ? result.errors : ['Registration failed'];
+      });
   }
 }
 

@@ -1,6 +1,6 @@
 export const environment = {
-  baseUrl: 'http://localhost:3000',
-  apiUrl: 'http://localhost:3000/api',
+  baseUrl: 'http://localhost:3002',
+  apiUrl: 'http://localhost:3002/api',
   authType: 'JWT', // 'JWT' or 'FIREBASE' - default to JWT
   // You will need to create a Firebase project and replace the configuration here with yours
   firebase: {

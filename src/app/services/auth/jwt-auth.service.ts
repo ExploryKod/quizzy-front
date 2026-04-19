@@ -1,7 +1,8 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { messagesFromAuthHttpError } from './auth-http-error';
 
 export interface JwtUser {
   email: string;
@@ -46,10 +47,10 @@ export class JwtAuthService {
       }),
       map(() => ({ isSuccess: true, errors: [] })),
       catchError((error): Observable<{ isSuccess: boolean; errors: string[] }> => {
-        const errors = error.error?.message 
-          ? [error.error.message] 
-          : ['Invalid credentials'];
-        return of({ isSuccess: false, errors });
+        if (isDevMode()) {
+          console.error('[JWT auth] login failed', error);
+        }
+        return of({ isSuccess: false, errors: messagesFromAuthHttpError(error) });
       })
     );
   }
@@ -67,10 +68,10 @@ export class JwtAuthService {
       }),
       map(() => ({ isSuccess: true, errors: [] })),
       catchError((error): Observable<{ isSuccess: boolean; errors: string[] }> => {
-        const errors = error.error?.message 
-          ? [error.error.message] 
-          : error.error?.errors || ['Registration failed'];
-        return of({ isSuccess: false, errors: Array.isArray(errors) ? errors : [errors] });
+        if (isDevMode()) {
+          console.error('[JWT auth] register failed', error);
+        }
+        return of({ isSuccess: false, errors: messagesFromAuthHttpError(error) });
       })
     );
   }

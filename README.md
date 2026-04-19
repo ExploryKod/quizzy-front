@@ -26,6 +26,20 @@ Angular client for the Quizzy stack. It talks to the **Quizzam** API (`apiUrl` i
 
 The dev build uses `src/environments/environment.development.ts`, which defaults to **`http://localhost:3000/api`**. If Quizzam runs on another port (for example **3002** when using the default Docker compose mapping), update `apiUrl` / `baseUrl` there so the browser can reach the API.
 
+## API Domain Configuration
+
+If `localhost:3000` is no longer correct, update the backend URL in the Angular environment files:
+
+- `src/environments/environment.development.ts` (used by `nx serve`)
+- `src/environments/environment.ts` (default/prod build)
+
+Set both `baseUrl` and `apiUrl` to your real API host, for example:
+
+```ts
+baseUrl: 'https://api.my-domain.com',
+apiUrl: 'https://api.my-domain.com/api',
+```
+
 Ensure Quizzam **CORS** allows the front origin (e.g. `http://localhost:4200` in `CORS_ORIGIN` in `quizzam/.env` when not using `*`).
 
 ## Scripts

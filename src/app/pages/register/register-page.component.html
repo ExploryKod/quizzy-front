@@ -3,6 +3,9 @@
     <form [formGroup]="registerForm" (ngSubmit)="doRegister()">
       <div class="register-form">
         <h1>{{ 'registerPage.title' | translate }}</h1>
+        <div *ngIf="submitErrors.length" class="register-submit-error" role="alert">
+          <div *ngFor="let line of submitErrors">{{ line }}</div>
+        </div>
         <div class="form-field">
           <mat-form-field>
             <input

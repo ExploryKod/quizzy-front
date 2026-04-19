@@ -19,6 +19,9 @@ export class LoginPageComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
+  /** Server / network errors from last submit (shown under the form). */
+  submitErrors: string[] = [];
+
   loginForm: FormGroup;
   get email() {
     return this.loginForm.controls['email'];
@@ -36,13 +39,16 @@ export class LoginPageComponent {
   }
 
   doLogin() {
-    this.authService.login(this.loginForm.value.email, this.loginForm.value.password).pipe(take(1)).subscribe((result) => {
-      if (result.isSuccess) {
-        this.router.navigateByUrl('');
-      }
-      else {
-        alert(result.errors.join('\n'));
-      }
-    });
+    this.submitErrors = [];
+    this.authService
+      .login(this.loginForm.value.email, this.loginForm.value.password)
+      .pipe(take(1))
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          this.router.navigateByUrl('');
+          return;
+        }
+        this.submitErrors = result.errors?.length ? result.errors : ['Login failed'];
+      });
   }
 }

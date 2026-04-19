@@ -1,13 +1,29 @@
 .header {
-  height: 6rem;
-  padding: 2rem 2rem 1rem 2rem;
-  display:flex;
-  justify-items: center;
+  padding: 0 1rem 0 0;
   align-items: center;
 }
 
-.question__title {
-  width: 90%;
+.question__header-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.question__header-title-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.question__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1.5rem 1rem;
+}
+
+.question__title-field {
+  width: 100%;
 }
 
 .question__answer {

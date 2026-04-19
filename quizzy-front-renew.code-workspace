@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../quizzam"
+		}
+	],
+	"settings": {
+		"nxConsole.nxWorkspacePath": "quizzy-front-renew-app"
+	}
+}
