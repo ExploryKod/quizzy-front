@@ -1,40 +1,68 @@
 <div class="quiz-host page">
   @if (currentStatus) {
-  <h2> Hosting quiz : @if (quiz) {
-    {{quiz.title}}
-  }</h2>
-} @else {
-  <h2> No quiz is being hosted </h2>
-}
-<div class="quiz-host__text-wrapper">
-  @if (currentStatus) {
-  <div class="text-wrapper__share">
-    Share the fun with code: <em>{{id}}</em>
-  </div>
+    <h2>
+      {{
+        'hostQuizPage.hostingTitle'
+          | translate: { title: quiz?.title ?? 'Quiz' }
+      }}
+    </h2>
   } @else {
-    <div class="text-wrapper__share">
-      There is no quiz with the code <em>{{id}}</em> in our startable quizzes. <br> You may have forgotten starting it first.
-    </div>
+    <h2>{{ 'hostQuizPage.noQuizHosted' | translate }}</h2>
   }
 
-  <div class="text-wrapper__status">
+  <div class="quiz-host__text-wrapper">
     @if (currentStatus) {
-      <div> Status: <span [ngClass]="currentStatus.status">{{currentStatus.status}}</span></div>
-      <div> Participants: <span>{{currentStatus.participants}}</span></div>
+      <div class="text-wrapper__share">
+        {{ 'hostQuizPage.shareCode' | translate }}
+        <em>{{ id }}</em>
+      </div>
     } @else {
-      <div class="alert"> Status: unknown</div>
+      <div class="text-wrapper__share">
+        {{ 'hostQuizPage.codeMissingHint' | translate: { code: id } }}
+      </div>
     }
 
+    <div class="text-wrapper__status">
+      @if (currentStatus) {
+        <div>
+          {{ 'hostQuizPage.statusLabel' | translate }}
+          <span [ngClass]="currentStatus.status">{{ currentStatus.status }}</span>
+        </div>
+        <div>
+          {{ 'hostQuizPage.participantsLabel' | translate }}
+          <span>{{ currentStatus.participants }}</span>
+        </div>
+      } @else {
+        <div class="alert">{{ 'hostQuizPage.statusUnknown' | translate }}</div>
+      }
+    </div>
   </div>
-</div>
-@if (currentStatus) {
-  <div class="quiz-host-start">
-    <button mat-raised-button color="primary" (click)="nextQuestion()">Next question</button>
-  </div>
-} @else {
-  <div class="quiz-host-start">
-    <a href="/" title="Go home" mat-raised-button color="primary" >Go Home</a>
-  </div>
-} 
-</div>
 
+  @if (currentStatus) {
+    @if (showAdvanceButton()) {
+      <div class="quiz-host-start">
+        <button
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="nextQuestion()"
+        >
+          {{ advanceButtonKey() | translate }}
+        </button>
+      </div>
+    } @else if (isHostQuizCompleted()) {
+      <div class="quiz-host-start quiz-host-start--done">
+        <p>{{ 'hostQuizPage.completed' | translate }}</p>
+        <a routerLink="/" mat-raised-button color="primary">{{
+          'hostQuizPage.backHome' | translate
+        }}</a>
+      </div>
+    }
+  } @else {
+    <div class="quiz-host-start">
+      <a routerLink="/" mat-raised-button color="primary" title="Go home">{{
+        'hostQuizPage.backHome' | translate
+      }}</a>
+    </div>
+  }
+</div>

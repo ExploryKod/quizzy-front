@@ -29,7 +29,10 @@
             color: blueviolet;
           }
           &.starting {
-            color: green
+            color: green;
+          }
+          &.started {
+            color: green;
           }
         }
       }
@@ -40,6 +43,17 @@
         font-weight: 500;
         font-size: 18px;
       }
+    }
+  }
+
+  .quiz-host-start--done {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    p {
+      margin: 0;
     }
   }
 }

@@ -131,5 +131,33 @@ export const fr = {
         placeholder: 'Nouvelle réponse',
       }
     }
-  }
+  },
+  hostQuizPage: {
+    hostingTitle: 'Animation du quiz : {{title}}',
+    noQuizHosted: 'Aucun quiz n’est animé avec ce code.',
+    shareCode: 'Partagez le code :',
+    codeMissingHint:
+      'Aucun quiz ne correspond au code {{code}} parmi les quiz démarrables. Avez-vous lancé le quiz depuis le tableau de bord ?',
+    statusLabel: 'Statut :',
+    participantsLabel: 'Participants :',
+    statusUnknown: 'Statut : inconnu',
+    button: {
+      startQuiz: 'Démarrer le quiz',
+      nextQuestion: 'Question suivante',
+      endQuiz: 'Terminer le quiz',
+    },
+    completed: 'Le quiz est terminé. Merci aux participant·es !',
+    backHome: 'Retour à l’accueil',
+  },
+  joinQuizPage: {
+    joined: 'Vous avez rejoint le quiz : {{quizTitle}}',
+    participants: 'Nombre de participants : {{count}}',
+    waitFirstQuestion:
+      'Patientez : l’enseignant·e enverra la première question sous peu.',
+    quizStarted: 'Le quiz a commencé !',
+    /** Shown when the host has sent the closing message (payload sans réponses). */
+    quizCompleted: 'Le quiz est terminé.',
+    loadingQuestion: 'Chargement de la question…',
+    fetchingStatus: 'Récupération du statut…',
+  },
 }

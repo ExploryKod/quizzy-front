@@ -3,7 +3,7 @@ import { SocketIoService } from '../../services/socket-io.service';
 import { SocketService } from '../../services/socket.service';
 
 export interface StatusEvent {
-  status: 'waiting';
+  status: 'waiting' | 'starting' | 'started' | string;
   participants: number;
 }
 

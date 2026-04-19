@@ -2,11 +2,12 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClientJoinDetails, QuizJoinService } from './quiz-join.service';
 import { tap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'qzy-join-quiz-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './join-quiz-page.component.html',
   styleUrl: './join-quiz-page.component.scss',
 })
