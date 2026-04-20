@@ -6,7 +6,8 @@
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "start:once": "nx serve-once"
+    "start:once": "nx serve-once",
+    "kill": "sh -c 'pids=$(ss -lptn \"sport = :4200\" | rg -o \"pid=[0-9]+\" | rg -o \"[0-9]+\"); [ -n \"$pids\" ] && kill $pids || true'"
   },
   "private": true,
   "dependencies": {

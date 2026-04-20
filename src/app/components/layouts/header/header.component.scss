@@ -1,5 +1,7 @@
 .header {
   background-color: transparent;
+  $inner-width: min(600px, 80%);
+  $inner-padding: 0 1.6rem;
 
   &__toolbar {
     display: flex;
@@ -7,11 +9,22 @@
     align-items: center;
     gap: 0.8rem;
     margin: 3rem auto 0 auto ;
-    height: 9.6rem;
-    max-width: min(600px, 80%);
+    height: 80px;
+    max-width: $inner-width;
     background-color: var(--color-primary);
     border-radius: var(--border-radius-header);
-    padding: 0 1.6rem;
+    padding: $inner-padding;
+  }
+
+  &__status-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.8rem;
+    margin: 0 auto;
+    height: 40px;
+    max-width: $inner-width;
+    padding: $inner-padding;
   }
 
   &__logo {
@@ -62,6 +75,11 @@
     }
   }
 
+  &__status-text {
+    font-size: 1.4rem;
+    color: var(--color-text-primary);
+  }
+
   &__user {
     display: flex;
     align-items: center;
@@ -71,6 +89,7 @@
     }
 
     &--icon {
+      color: var(--color-text-secondary);
       font-size: 5rem;
       width: 5rem;
       height: 5rem;
@@ -103,6 +122,12 @@
     border-radius: 0.4rem;
     box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.2);
     z-index: 10;
+  }
+
+  &__user-name {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
   }
 
   &__logout {

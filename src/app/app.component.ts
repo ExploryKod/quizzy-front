@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
+import { HeaderComponent } from './components/layouts/header/header.component';
 import { TranslateService } from '@ngx-translate/core';
 import { fr } from './translations/fr';
 
