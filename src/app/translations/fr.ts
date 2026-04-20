@@ -158,6 +158,17 @@ export const fr = {
     /** Shown when the host has sent the closing message (payload sans réponses). */
     quizCompleted: 'Le quiz est terminé.',
     loadingQuestion: 'Chargement de la question…',
-    fetchingStatus: 'Récupération du statut…',
+    /** Avant la première réponse socket `joinDetails` (code en cours de vérification). */
+    verifyingCode: 'Vérification du code…',
+    /**
+     * Après `joinDetails`, en attente du premier événement `status` (bref délai possible).
+     */
+    connecting: 'Connexion à la session…',
+    /**
+     * Aucun `joinDetails` reçu à temps : code fictif, session inexistante en base,
+     * ou animateur n’a pas ouvert la page hôte (pas de salle WebSocket).
+     */
+    sessionUnavailable:
+      'Impossible de rejoindre cette session : le code est incorrect ou le quiz n’a pas été démarré par l’animateur (page hôte non ouverte).',
   },
 }

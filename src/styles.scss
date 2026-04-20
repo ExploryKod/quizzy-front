@@ -8,6 +8,38 @@
 
 :root {
 
+  /* New set of colors */
+  --white: #FFFFFF;
+  --black: #000000;
+  --grey-50: #F4F6FA;
+  --grey-500: #626C7F;
+  --blue-50: #EBF0FF;
+  --blue-100: #EDF1F9;
+  --blue-300: #ABC1E1;
+  --blue-500: #306AFF;
+  --blue-850: #394D66;
+  --blue-900: #313551;
+  --blue-950: #2D3949;
+  --green-100: #E0FDEF;
+  --green-500: #2FD887;
+  --purple-100: #F6E7FF;
+  --purple-600: #A729F5;
+  --orange-50: #FFF5ED;
+  --orange-400: #FF7E35;
+  --red-500: #EE5454;
+
+  /* New set of spacing */
+  --spacing-100: 8px;
+  --spacing-200: 16px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1600: 128px;
+  --spacing-1800: 144px;
+  --spacing-2300: 184px;
+
   --color-primary : #7d3780;
   --color-paper-lighter: #f7f4e3;
   --color-paper: #f2eecb;
@@ -32,6 +64,9 @@
   --container-maxw: 1200px;
   
   --border-radius-header: 3rem;
+
+
+ 
 }
 
 html {

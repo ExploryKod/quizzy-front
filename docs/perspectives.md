@@ -10,3 +10,9 @@
 - Optionnel : centraliser le message de clôture (au lieu de chaînes en dur dans le gateway) et documenter le contrat socket (types partagés front / API).
 
 Cela simplifiera l’UI élève et hôte et évitera les ambiguïtés si le format du dernier message change.
+
+## API — validation d’un code d’exécution avant `join` WebSocket
+
+**Contexte :** sans endpoint REST public, l’app ne peut pas savoir si un code existe en base **avant** d’émettre `join`. Le front utilise un **timeout** (~12 s) si aucun `joinDetails` n’arrive (code faux, session absente, ou hôte n’a pas ouvert la page).
+
+**À traiter plus tard côté API (optionnel) :** `GET /api/execution/:id` (ou `HEAD`) renvoyant 404 / 200 pour afficher une erreur **immédiate** sans attendre le timeout, et distinguer « code inconnu » vs « quiz non démarré » si le modèle de données le permet.

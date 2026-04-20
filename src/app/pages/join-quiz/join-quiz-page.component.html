@@ -1,87 +1,102 @@
 <div class="join-quiz page">
-  @if (quizDetails) {
+  @if (joinPhase === 'checking') {
+    <div class="join-quiz__status info">
+      {{ 'joinQuizPage.verifyingCode' | translate }}
+    </div>
+  }
+
+  @if (joinPhase === 'unavailable') {
+    <div class="join-quiz__error" role="alert">
+      {{ 'joinQuizPage.sessionUnavailable' | translate }}
+    </div>
+    <a routerLink="/" class="join-quiz__back">{{
+      'hostQuizPage.backHome' | translate
+    }}</a>
+  }
+
+  @if (joinPhase === 'joined' && quizDetails) {
     <h3>
       {{
         'joinQuizPage.joined'
           | translate: { quizTitle: quizDetails.quizTitle }
       }}
     </h3>
-  }
 
-  @if (status$ | async; as status) {
-    @switch (status.status) {
-      @case ('waiting') {
-        <div class="join-quiz__status">
-          {{
-            'joinQuizPage.participants'
-              | translate: { count: status.participants }
-          }}
-        </div>
-        <div class="info">
-          {{ 'joinQuizPage.waitFirstQuestion' | translate }}
-        </div>
-      }
-      @case ('starting') {
-        <div class="join-quiz__status">
-          {{
-            'joinQuizPage.participants'
-              | translate: { count: status.participants }
-          }}
-        </div>
-        <div class="info">
-          {{ 'joinQuizPage.waitFirstQuestion' | translate }}
-        </div>
-      }
-      @case ('started') {
-        <div class="join-quiz__status">
-          {{
-            'joinQuizPage.participants'
-              | translate: { count: status.participants }
-          }}
-        </div>
+    @if (status$ | async; as status) {
+      @switch (status.status) {
+        @case ('waiting') {
+          <div class="join-quiz__status">
+            {{
+              'joinQuizPage.participants'
+                | translate: { count: status.participants }
+            }}
+          </div>
+          <div class="info">
+            {{ 'joinQuizPage.waitFirstQuestion' | translate }}
+          </div>
+        }
+        @case ('starting') {
+          <div class="join-quiz__status">
+            {{
+              'joinQuizPage.participants'
+                | translate: { count: status.participants }
+            }}
+          </div>
+          <div class="info">
+            {{ 'joinQuizPage.waitFirstQuestion' | translate }}
+          </div>
+        }
+        @case ('started') {
+          <div class="join-quiz__status">
+            {{
+              'joinQuizPage.participants'
+                | translate: { count: status.participants }
+            }}
+          </div>
 
-        @if (question$ | async; as question) {
-          @if (question.answers.length === 0) {
-            <div class="info join-quiz__phase join-quiz__phase--done">
-              {{ 'joinQuizPage.quizCompleted' | translate }}
+          @if (question$ | async; as question) {
+            @if (question.answers.length === 0) {
+              <div class="info join-quiz__phase join-quiz__phase--done">
+                {{ 'joinQuizPage.quizCompleted' | translate }}
+              </div>
+            } @else {
+              <div class="info join-quiz__phase">
+                {{ 'joinQuizPage.quizStarted' | translate }}
+              </div>
+            }
+            <div class="question">
+              <div class="question__title">{{ question.question }}</div>
+              @if (question.answers.length) {
+                <div class="question__answers">
+                  @for (answer of question.answers; track $index) {
+                    <div class="question__answer">{{ answer }}</div>
+                  }
+                </div>
+              }
             </div>
           } @else {
             <div class="info join-quiz__phase">
               {{ 'joinQuizPage.quizStarted' | translate }}
             </div>
+            <div class="info">
+              {{ 'joinQuizPage.loadingQuestion' | translate }}
+            </div>
           }
-          <div class="question">
-            <div class="question__title">{{ question.question }}</div>
-            @if (question.answers.length) {
-              <div class="question__answers">
-                @for (answer of question.answers; track $index) {
-                  <div class="question__answer">{{ answer }}</div>
-                }
-              </div>
-            }
+        }
+        @default {
+          <div class="join-quiz__status">
+            {{
+              'joinQuizPage.participants'
+                | translate: { count: status.participants }
+            }}
           </div>
-        } @else {
-          <div class="info join-quiz__phase">
-            {{ 'joinQuizPage.quizStarted' | translate }}
-          </div>
-          <div class="info">
-            {{ 'joinQuizPage.loadingQuestion' | translate }}
-          </div>
+          <div class="info">Status: {{ status.status }}</div>
         }
       }
-      @default {
-        <div class="join-quiz__status">
-          {{
-            'joinQuizPage.participants'
-              | translate: { count: status.participants }
-          }}
-        </div>
-        <div class="info">Status: {{ status.status }}</div>
-      }
+    } @else {
+      <div class="info">
+        {{ 'joinQuizPage.connecting' | translate }}
+      </div>
     }
-  } @else {
-    <div class="join-quiz__status alert">
-      {{ 'joinQuizPage.fetchingStatus' | translate }}
-    </div>
   }
 </div>
