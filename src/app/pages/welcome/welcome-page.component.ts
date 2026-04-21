@@ -6,6 +6,7 @@ import { QuizButtonListComponent } from './components/quiz-button-list/quiz-butt
 import { QuizService } from '../../services/quiz.service';
 import { filter, switchMap, take } from 'rxjs';
 import { Quiz } from '../../model/quiz';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qzy-welcome-page',
@@ -17,6 +18,7 @@ import { Quiz } from '../../model/quiz';
 export class WelcomePageComponent {
   private readonly authService = inject(AuthService);
   private readonly quizService = inject(QuizService);
+  private readonly router = inject(Router);
   isLogged$ = this.authService.isLogged$;
   quizzes$ = this.authService.isLogged$.pipe(
     filter(isLogged => isLogged === true),
@@ -27,6 +29,19 @@ export class WelcomePageComponent {
   );
 
   onQuizButtonClick(quiz: Quiz) {
-    console.log('Quiz button clicked', quiz.id);
+    const startUrl = quiz._links?.start;
+    if (!startUrl) {
+      console.log('Quiz has no start link yet', quiz.id);
+      return;
+    }
+
+    this.quizService.start(startUrl).subscribe({
+      next: (executionId) => {
+        this.router.navigateByUrl(`/join/${executionId}`);
+      },
+      error: (error) => {
+        console.error('Failed to start quiz', quiz.id, error);
+      },
+    });
   }
 }
