@@ -1,0 +1,6 @@
+<div class="quiz-button-list">
+  @for (quiz of quizzes; track quiz.id) {
+    <qzy-button-quiz [buttonQuiz]="toButtonQuiz(quiz)" (buttonClick)="onQuizClick(quiz)"></qzy-button-quiz>
+  }
+</div>
+
