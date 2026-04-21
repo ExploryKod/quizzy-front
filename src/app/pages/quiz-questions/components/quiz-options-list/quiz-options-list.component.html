@@ -1,5 +1,5 @@
 <div class="quiz-options-list">
-  @for (answer of answers; track $index; let index = $index) {
+  @for (answer of answers; track answer.title; let index = $index) {
     <qzy-button-option
       [buttonOption]="toButtonOption(answer, index)"
       [isSelected]="isSelected(answer)"
@@ -18,7 +18,7 @@
     [disabled]="!selectedAnswerTitle || isSubmitting"
     (click)="onSubmitOrNext()"
   >
-    {{ (isSubmitted ? nextQuestionLabel : submitAnswerLabel) | translate }}
+    {{ (isSubmitted ? (isLastQuestion ? getScoreLabel : nextQuestionLabel) : submitAnswerLabel) | translate }}
   </button>
 </div>
 

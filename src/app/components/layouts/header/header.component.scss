@@ -11,7 +11,7 @@
     margin: 3rem auto 0 auto ;
     height: 80px;
     max-width: $inner-width;
-    background-color: var(--color-primary);
+    background-color: var(--element-primary);
     border-radius: var(--border-radius-header);
     padding: $inner-padding;
   }
@@ -31,12 +31,12 @@
     padding: 0.9rem;
     height: max(50%, 6rem);
     border-radius: 50%;
-    background-color: var(--color-cta-yellow);
-    color: var(--color-primary);
+    background-color: var(--element-cta-yellow);
+    color: var(--element-primary);
   }
 
   &__title {
-    color: var(--color-text-secondary);
+    color: var(--element-text-secondary);
     text-decoration: none;
     font-size: 2.4rem;
     font-weight: 700;
@@ -45,7 +45,7 @@
 
     &:hover, &:visited {
       text-decoration: none;
-      color: var(--color-text-secondary);
+      color: var(--element-text-secondary);
     }
   }
 
@@ -59,7 +59,7 @@
     vertical-align: middle;
 
     &--ko {
-      color: var(--color-error);
+      color: var(--element-error);
     }
 
     &--partial {
@@ -67,7 +67,7 @@
     }
 
     &--full {
-      color: var(--color-success-background);
+      color: var(--element-success-background);
     }
 
     &--unknown {
@@ -89,7 +89,7 @@
     }
 
     &--icon {
-      color: var(--color-text-secondary);
+      color: var(--element-text-secondary);
       font-size: 5rem;
       width: 5rem;
       height: 5rem;
@@ -118,7 +118,7 @@
     top: calc(100% + 0.4rem);
     min-width: 12rem;
     padding: 0.8rem 0;
-    background: var(--color-paper-lighter, #fff);
+    background: var(--element-paper-lighter, #fff);
     border-radius: 0.4rem;
     box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.2);
     z-index: 10;
@@ -127,7 +127,7 @@
   &__user-name {
     font-size: 1.6rem;
     font-weight: 500;
-    color: var(--color-text-secondary);
+    color: var(--element-text-secondary);
   }
 
   &__logout {
@@ -139,10 +139,10 @@
     font: inherit;
     text-align: left;
     cursor: pointer;
-    color: var(--color-text-dark);
+    color: var(--element-text-dark);
 
     &:hover {
-      background: var(--color-paper, #eee);
+      background: var(--element-paper, #eee);
     }
   }
 }

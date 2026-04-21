@@ -75,15 +75,18 @@ $quiz-colors: (
 
 // Semantic/UI element colors exported as --color-* custom properties in :root
 $quiz-element-colors: (
+  'quiz-box-shadow': rgba(0, 0, 0, 0.15) 0px 2px 8px,
   'button-quiz': var(--white),
   'text-dark': var(--blue-900),
+  'button-submit-color': var(--purple-600),
+  'button-submit-text-color': var(--white),
   'primary': #7d3780,
   'paper-lighter': #f7f4e3,
   'paper': #f2eecb,
   'paper-darker': #e6e1b3,
   'paper-complementary': #cbcff2,
   'paper-complementary-darker': #b3b3e6,
-  'text-secondary': #fefefe,
+  'text-secondary': var(--white),
   'error': #9a1d1d,
   'error-background': #ffb2b2,
   'success-background': #63a163,

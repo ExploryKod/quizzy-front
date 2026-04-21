@@ -1,25 +1,50 @@
 <div class="quiz-questions page">
   <div class="quiz-questions__intro">
     <div class="quiz-questions__text-wrapper">
-      <div class="quiz-questions__number">
-        <span class="quiz-questions__number-text">
-          {{ 'quizQuestions.number' | translate }}
-        </span>
-        {{ currentQuestionIndex + 1 }} / {{ quiz?.questions?.length || 0 }}
-      </div>
-      <h1 class="quiz-questions__title">
-        {{ currentQuestion?.title || ('quizQuestions.title' | translate) }}
-      </h1>
+      @if (showScoreCard) {
+        <h1 class="quiz-questions__title quiz-questions__title--completed">
+          <span class="quiz-questions__title-part">
+            {{ 'quizQuestions.completedTitle' | translate }}
+          </span>
+          <span class="quiz-questions__title-part quiz-questions__title-part--strong">
+            {{ 'quizQuestions.youScored' | translate }}
+          </span>
+        </h1>
+      } @else {
+        <div class="quiz-questions__number">
+          <span class="quiz-questions__number-text">
+            {{ 'quizQuestions.number' | translate }}
+          </span>
+          {{ currentQuestionIndex + 1 }} / {{ quiz?.questions?.length || 0 }}
+        </div>
+        <h1 class="quiz-questions__title">
+          {{ currentQuestion?.title || ('quizQuestions.title' | translate) }}
+        </h1>
+      }
     </div>
 
     <div class="quiz-questions__options-wrapper">
-      @if (quiz && currentQuestion) {
+      @if (showScoreCard) {
+        <qzy-quiz-score-card
+          [correctAnswers]="finalScore.correct"
+          [totalQuestions]="finalScore.total"
+        ></qzy-quiz-score-card>
+        <button
+          type="button"
+          class="quiz-questions__submit-button"
+          (click)="onPlayAgain()"
+        >
+          {{ 'quizQuestions.playAgain' | translate }}
+        </button>
+      } @else if (quiz && currentQuestion) {
         <qzy-quiz-options-list
           [quizId]="quiz.id"
           [questionId]="currentQuestion.id"
           [answers]="currentAnswers"
+          [isLastQuestion]="isLastQuestion"
           (answerClick)="onAnswerClick($event)"
           (nextQuestion)="onNextQuestion()"
+          (getScore)="onGetScore()"
         ></qzy-quiz-options-list>
       } @else {
         <div class="quiz-questions__empty-state">

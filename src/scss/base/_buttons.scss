@@ -1,0 +1,27 @@
+
+
+.simple-button {
+    background-color: var(--element-button-submit-color);
+    color: var(--element-button-submit-text-color);
+    box-shadow: var(--element-quiz-box-shadow);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border: none;
+    border-radius: 24px;
+    padding: 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 2.5px 8.5px;
+      transform: translateY(-0.8px);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+    }
+}

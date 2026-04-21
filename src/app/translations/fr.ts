@@ -116,6 +116,19 @@ export const fr = {
   myQuizzes: {
     title: 'Mes questionnaires',
   },
+  quizQuestions: {
+    number: 'Question',
+    total: 'sur',
+    title: 'Questionnaire',
+    completedTitle: 'Quiz termine.',
+    youScored: 'Votre score...',
+    submit: 'Valider la reponse',
+    nextQuestion: 'Question suivante',
+    getScore: 'Voir le score',
+    scoreTitle: 'Votre score',
+    playAgain: 'Rejouer',
+    noAnswers: 'Aucune reponse disponible',
+  },
   quizEditPage: {
     notFound: 'Quiz non trouvé',
     error: 'Erreur lors du chargement du quiz',

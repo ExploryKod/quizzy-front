@@ -12,11 +12,11 @@
   &__main {
     min-width: 100%;
     padding: 24px;
-    background-color: var(--color-button-quiz);
+    background-color: var(--element-button-quiz);
     border: none;
     border-radius: 24px;
     cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    box-shadow: var(--element-quiz-box-shadow);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     display: flex;
     align-items: center;
@@ -65,7 +65,7 @@
 
   &__text {
     font-size: clamp(20px, 5vw, 28px);
-    color: var(--color-text-dark);
+    color: var(--element-text-dark);
     font-weight: 500;
     white-space: nowrap;
     overflow: hidden;
@@ -89,7 +89,7 @@
     border: none;
     border-radius: 50%;
     background: transparent;
-    color: var(--color-primary);
+    color: var(--element-primary);
     cursor: pointer;
   }
 

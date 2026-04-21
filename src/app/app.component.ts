@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/layouts/header/header.component';
 import { TranslateService } from '@ngx-translate/core';
 import { fr } from './translations/fr';
 import { filter } from 'rxjs';
+import { en } from './translations/en';
 
 @Component({
   standalone: true,
@@ -22,9 +23,9 @@ export class AppComponent {
   title = 'quizzy-front';
 
   constructor() {
-    this.translateService.setDefaultLang('fr');
-    this.translateService.setTranslation('fr', fr);
-    this.translateService.use('fr');
+    this.translateService.setDefaultLang('en');
+    this.translateService.setTranslation('en', en);
+    this.translateService.use('en');
 
     this.updateBodyPageClass();
     this.router.events

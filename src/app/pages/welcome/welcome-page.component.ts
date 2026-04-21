@@ -29,19 +29,10 @@ export class WelcomePageComponent {
   );
 
   onQuizButtonClick(quiz: Quiz) {
-    const startUrl = quiz._links?.start;
-    if (!startUrl) {
-      console.log('Quiz has no start link yet', quiz.id);
+    if (!quiz.id) {
+      console.log('Quiz has no id, cannot navigate to questions page');
       return;
     }
-
-    this.quizService.start(startUrl).subscribe({
-      next: (executionId) => {
-        this.router.navigateByUrl(`/join/${executionId}`);
-      },
-      error: (error) => {
-        console.error('Failed to start quiz', quiz.id, error);
-      },
-    });
+    this.router.navigateByUrl(`/quiz-questions/${quiz.id}`);
   }
 }
