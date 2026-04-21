@@ -1,0 +1,29 @@
+<div class="button-quiz" [class.button-quiz--with-actions]="visibleActions.length > 0">
+  <button
+    type="button"
+    class="button-quiz__main"
+    [disabled]="hasActions"
+    (click)="onButtonClick()">
+    <div class="button-quiz__content">
+      <span class="button-quiz__icon">
+        <img [src]="buttonQuiz.icon" [alt]="buttonQuiz.title" />
+      </span>
+      <span class="button-quiz__text">
+        {{ buttonQuiz.title }}
+      </span>
+    </div>
+    <div class="button-quiz__actions">
+      @if (visibleActions.length > 0) {
+        @for (action of visibleActions; track action.key) {
+          <button
+            type="button"
+            class="button-quiz__action-button"
+            [attr.aria-label]="action.ariaLabel"
+            (click)="onActionClick(action.key, $event)">
+            <mat-icon class="button-quiz__action-icon">{{ action.icon }}</mat-icon>
+          </button>
+        }
+      }
+    </div>
+  </button>
+</div>

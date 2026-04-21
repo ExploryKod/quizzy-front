@@ -1,0 +1,71 @@
+// -----------------------------------------------------------------------------
+// This file contains CSS helper classes.
+// -----------------------------------------------------------------------------
+
+//
+// Clear inner floats
+//
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+//
+// Hide text while making it readable for screen readers
+// 1. Needed in WebKit-based browsers because of an implementation bug;
+//    See: https://code.google.com/p/chromium/issues/detail?id=457146
+//
+.hide-text {
+  padding: 0; /* 1 */
+  overflow: hidden;
+  text-indent: 101%;
+  white-space: nowrap;
+}
+
+//
+// Hide element while making it readable for screen readers
+// Shamelessly borrowed from HTML5Boilerplate:
+// https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+//
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+}
+
+.sr-only {
+  position: absolute; 
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px; 
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap; /* added line */
+  border: 0;
+}
+
+.skip-to-main {
+  position: absolute;
+  z-index: 9999;
+  background: hsl( var(--color-white) );
+  color: hsl( var(--color-dark) );
+  padding: .5em 1em;
+  margin-inline: auto;
+  transform: translateY(-101%);
+  transition: transform 250ms ease-in;
+}
+
+.skip-to-main:focus {
+  transform: translateY(0);
+}
+
+.stripe-shadow {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}

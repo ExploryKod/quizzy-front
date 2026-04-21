@@ -87,7 +87,8 @@ export const fr = {
     },
   },
   welcomePage: {
-    title: 'Bienvenue sur Quizzy !',
+    pretitle: 'Bienvenue sur le',
+    title: 'Quiz du jour !',
     description: 'Affrontez vos amis dans des quiz de culture générale !',
     join : {
       title : 'Rejoignez un questionnaire !',
@@ -111,6 +112,9 @@ export const fr = {
         title: '{{nb}} quizzes',
       }
     }
+  },
+  myQuizzes: {
+    title: 'Mes questionnaires',
   },
   quizEditPage: {
     notFound: 'Quiz non trouvé',

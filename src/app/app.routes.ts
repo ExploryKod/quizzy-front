@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { WelcomePageComponent } from './pages/welcome/welcome-page.component';
+import { MyQuizzesComponent } from './pages/my-quizzes/my-quizzes.component';
 
 
 export const appRoutes: Route[] = [
@@ -26,6 +27,10 @@ export const appRoutes: Route[] = [
   {
     path: 'register',
     loadChildren: () => import('./pages/register/register.routes').then(m => m.registerRoutes)
+  },
+  {
+    path: 'my-quizzes',
+    component: MyQuizzesComponent
   },
   {
     path: '**',
