@@ -1,11 +1,19 @@
-<button type="button" class="button-option">
-    <span class="answer-index">
-        {{ answer.index }}
-    </span>
-    <span class="button-option__text">
-        {{ answer.title }}
-    </span>
-    <span class="button-option__icon">
-        <img src="assets/images/icon-correct.svg" alt="{{ 'button-option.correct' | translate }}" />
-     </span>
-</button>
+<div class="button-option">
+    <button
+      type="button"
+      class="button-option__main"
+      [class.button-option__main--selected]="isSelected"
+      [class.button-option__main--correct]="isCorrect"
+      [class.button-option__main--incorrect]="isIncorrect"
+      [disabled]="disabled"
+      (click)="onButtonClick()">
+      <div class="button-option__content">
+        <span class="button-option__icon">
+          <img [src]="buttonOption.icon" [alt]="buttonOption.title" />
+        </span>
+        <span class="button-option__text">
+          {{ buttonOption.title }}
+        </span>
+      </div>
+    </button>
+  </div>

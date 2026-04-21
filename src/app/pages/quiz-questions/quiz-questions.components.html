@@ -1,0 +1,31 @@
+<div class="quiz-questions page">
+  <div class="quiz-questions__intro">
+    <div class="quiz-questions__text-wrapper">
+      <div class="quiz-questions__number">
+        <span class="quiz-questions__number-text">
+          {{ 'quizQuestions.number' | translate }}
+        </span>
+        {{ currentQuestionIndex + 1 }} / {{ quiz?.questions?.length || 0 }}
+      </div>
+      <h1 class="quiz-questions__title">
+        {{ currentQuestion?.title || ('quizQuestions.title' | translate) }}
+      </h1>
+    </div>
+
+    <div class="quiz-questions__options-wrapper">
+      @if (quiz && currentQuestion) {
+        <qzy-quiz-options-list
+          [quizId]="quiz.id"
+          [questionId]="currentQuestion.id"
+          [answers]="currentAnswers"
+          (answerClick)="onAnswerClick($event)"
+          (nextQuestion)="onNextQuestion()"
+        ></qzy-quiz-options-list>
+      } @else {
+        <div class="quiz-questions__empty-state">
+          {{ 'quizQuestions.noAnswers' | translate }}
+        </div>
+      }
+    </div>
+  </div>
+</div>

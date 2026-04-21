@@ -7,6 +7,8 @@ export interface Quiz {
 
   questions: QuizQuestion[];
 
+  executionId?: string;
+
   _links?: {
     start?: string;
   }

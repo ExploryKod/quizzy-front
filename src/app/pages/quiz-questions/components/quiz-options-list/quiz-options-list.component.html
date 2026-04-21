@@ -1,0 +1,29 @@
+<div class="quiz-options-list">
+  @for (answer of answers; track $index; let index = $index) {
+    <qzy-button-option
+      [buttonOption]="toButtonOption(answer, index)"
+      [isSelected]="isSelected(answer)"
+      [isCorrect]="isCorrect(answer)"
+      [isIncorrect]="isIncorrect(answer)"
+      [disabled]="isSubmitted"
+      (buttonClick)="onAnswerClick(answer)"
+    ></qzy-button-option>
+  } @empty {
+    <ng-container *ngTemplateOutlet="noAnswers"></ng-container>
+  }
+
+  <button
+    type="button"
+    class="quiz-options-list__submit-button"
+    [disabled]="!selectedAnswerTitle || isSubmitting"
+    (click)="onSubmitOrNext()"
+  >
+    {{ (isSubmitted ? nextQuestionLabel : submitAnswerLabel) | translate }}
+  </button>
+</div>
+
+<ng-template #noAnswers>
+  <div class="no-answers">
+    {{ 'quizQuestions.noAnswers' | translate }}
+  </div>
+</ng-template>
