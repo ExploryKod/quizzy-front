@@ -26,6 +26,8 @@
     <div class="quiz-questions__options-wrapper">
       @if (showScoreCard) {
         <qzy-quiz-score-card
+          [quizTitle]="quiz?.title || ''"
+          [quizIcon]="quiz?.icon || ''"
           [correctAnswers]="finalScore.correct"
           [totalQuestions]="finalScore.total"
         ></qzy-quiz-score-card>

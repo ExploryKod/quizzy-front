@@ -7,6 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 import { QuizListComponent } from './quiz-list/quiz-list.component';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { filter, switchMap, take } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'qzy-dashboard',
@@ -20,15 +21,15 @@ export class DashboardComponent {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
   
-  // Only load quizzes when user is logged in AND has a valid token
-  // Wait for user to be logged in, verify token exists and is not expired, then load quizzes
-  quizzes$ = this.authService.isLogged$.pipe(
-    filter(isLogged => isLogged === true),
-    switchMap(() => this.authService.getToken()),
-    filter(token => token !== null && token !== undefined && token !== ''),
-    take(1),
-    switchMap(() => this.quizService.getAll())
-  );
+  quizzes$ = environment.useFakeApi
+    ? this.quizService.getAll()
+    : this.authService.isLogged$.pipe(
+      filter(isLogged => isLogged === true),
+      switchMap(() => this.authService.getToken()),
+      filter(token => token !== null && token !== undefined && token !== ''),
+      take(1),
+      switchMap(() => this.quizService.getAll())
+    );
 
   createQuiz() {
     this.quizService.create().subscribe((quizId) => {

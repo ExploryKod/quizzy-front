@@ -1,4 +1,5 @@
 @use 'scss/abstracts/responsive' as bp;
+@use 'scss/base/typography' as *;
 
 :host {
   display: block;
@@ -76,10 +77,8 @@
   }
 
   &__text {
-    font-size: clamp(20px, 5vw, 28px);
-    color: var(--element-text-dark);
-    font-weight: 500;
-    white-space: nowrap;
+    /* quiz-title-sm — Figma Preset 4 (title-sm) · font-text level 5 · LH 100% */
+    @extend .quiz-title-sm;
     overflow: hidden;
     text-overflow: ellipsis;
   }

@@ -1,10 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthService } from '../../services/auth/auth.service';
 import { QuizButtonListComponent } from './components/quiz-button-list/quiz-button-list.component';
 import { QuizService } from '../../services/quiz.service';
-import { filter, switchMap, take } from 'rxjs';
 import { Quiz } from '../../model/quiz';
 import { Router } from '@angular/router';
 
@@ -16,17 +14,9 @@ import { Router } from '@angular/router';
   styleUrl: './welcome-page.component.scss',
 })
 export class WelcomePageComponent {
-  private readonly authService = inject(AuthService);
   private readonly quizService = inject(QuizService);
   private readonly router = inject(Router);
-  isLogged$ = this.authService.isLogged$;
-  quizzes$ = this.authService.isLogged$.pipe(
-    filter(isLogged => isLogged === true),
-    switchMap(() => this.authService.getToken()),
-    filter(token => token !== null && token !== undefined && token !== ''),
-    take(1),
-    switchMap(() => this.quizService.getAll())
-  );
+  quizzes$ = this.quizService.getAll();
 
   onQuizButtonClick(quiz: Quiz) {
     if (!quiz.id) {

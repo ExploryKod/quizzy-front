@@ -1,11 +1,15 @@
 // -----------------------------------------------------------------------------
-// Basic typography style for copy text.
+// Basic typography: .quiz-title-* / .quiz-text-* + modifiers (--bold, --italic, …).
+// Fluid sizes come from @include font-text(level, …) → maps in abstracts/_variables.scss.
+// Need only a different font size? Add utility .size-N (same maps) alongside your class.
+// Smallest fluid: .quiz-text-xxs (12), .quiz-text-xs (11). Figma Preset 6 (fixed 20px italic): .quiz-text-fixed-20px.
 // -----------------------------------------------------------------------------
 @use 'sass:math';
 @use '../abstracts/variables' as *;
 @use '../abstracts/responsive' as *;
 @use '../abstracts/mixins' as *;
 
+// .size-1 … .size-12 — font-size only (clamp). Index N = same N as @include font-text(N) and $text-sizes-* maps in _variables.scss.
 .size {
   @each $level, $size in $text-sizes-xl-array {
     &-#{$level} {
@@ -17,6 +21,7 @@
   }
 }
 
+// chevron-size-* — icon dimensions only (not Figma text presets)
 .chevron-size {
   @each $level, $size in $chevron-size-array {
     &-#{$level} {
@@ -32,6 +37,7 @@ Class utilisé pour ajouter un layout en flex au conteneur de 2 span pour gérer
 quiz-flex-text-sm > flex column à partir du viewport width en sm
 quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 */
+// quiz-flex-text-* — layout helper (flex column at breakpoints); not a Figma preset
 .quiz-flex-text {
   @each $breakpoint, $width in $grid-breakpoints {
     &-#{$breakpoint} {
@@ -49,7 +55,8 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   }
 }
 
-/*** DCI CUSTOM TITLES ***/
+/*** quiz CUSTOM TITLES ***/
+// quiz-title-xl — Figma Preset 1 (display) · font-text level 1 · LH 100% · Rubik Medium default
 .quiz-title-xl {
   margin-top: 0;
   margin-bottom: $quiz-title-xl-mb;
@@ -57,14 +64,14 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   color: $quiz-dark-blue;
   font-family: $font-family-title;
 
-  @include font-text(1, $fw-normal, 1.2);
+  @include font-text(1, $fw-medium, 1);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--bold {
-    @include font-text(1, $fw-bold, 1.2);
+    @include font-text(1, $fw-bold, 1);
   }
 
   &.--justify {
@@ -74,6 +81,11 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 
   &.--uppercase {
     text-transform: uppercase;
+  }
+
+  // Same scale as Preset 1, Rubik Light (lighter weight only)
+  &.--light {
+    @include font-text(1, $fw-light, 1);
   }
 }
 
@@ -88,6 +100,7 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   }
 }
 
+// quiz-title-lg — Figma Preset 2 Medium · font-text level 2 · LH 100%
 .quiz-title-lg {
   margin-top: 0;
   margin-bottom: $quiz-title-xl-mb;
@@ -95,14 +108,14 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   color: $quiz-dark-blue;
   font-family: $font-family-title;
 
-  @include font-text(2, $fw-normal, 1.2);
+  @include font-text(2, $fw-medium, 1);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--bold {
-    @include font-text(2, $fw-bold, 1.2);
+    @include font-text(2, $fw-bold, 1);
   }
 
   &.--justify {
@@ -112,6 +125,11 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 
   &.--uppercase {
     text-transform: uppercase;
+  }
+
+  // Figma Preset 2 (Light) — same sizes as Preset 2 Medium, Rubik Light
+  &.--light {
+    @include font-text(2, $fw-light, 1);
   }
 }
 
@@ -138,6 +156,7 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 
 
 
+// quiz-title-md — Figma Preset 3 · font-text level 3 · LH 120%
 .quiz-title-md {
   margin-top: 0;
   margin-bottom: 0;
@@ -145,14 +164,14 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   color: $quiz-dark-blue;
   font-family: $font-family-text;
 
-  @include font-text(3, $fw-bold, calc(30/37));
+  @include font-text(3, $fw-medium, 1.2);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--semibold {
-    @include font-text(5, $fw-semibold,  calc(30/37));
+    @include font-text(3, $fw-semibold, 1.2);
   }
 
   &.--justify {
@@ -165,20 +184,21 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   }
 }
 
+// quiz-title-sm — Figma Preset 4 (title-sm) · font-text level 5 · LH 100%
 .quiz-title-sm {
   margin-top: 0;
   padding-top: 0;
-  color: $quiz-dark-blue;
+  color: var(--element-text-dark);
   font-family: $font-family-text;
 
-  @include font-text(5, $fw-semibold, 0.9);
+  @include font-text(5, $fw-medium, 1);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--bold {
-    @include font-text(5, $fw-bold, 0.9);
+    @include font-text(5, $fw-bold, 1);
   }
 
   &.--justify {
@@ -191,20 +211,21 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   }
 }
 
+// quiz-title-xs — between Preset 4 & Preset 5 scale · font-text level 6 · LH 150%
 .quiz-title-xs {
   margin-top: 0;
   padding-top: 0;
   color: $quiz-dark-black;
   font-family: $font-family-text;
 
-  @include font-text(6, $fw-semibold, 0.9);
+  @include font-text(6, $fw-medium, 1.5);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--bold {
-    @include font-text(6, $fw-bold, 0.9);
+    @include font-text(6, $fw-bold, 1.5);
   }
 
   &.--justify {
@@ -218,19 +239,20 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 
 }
 
-/*** DCI CUSTOM TEXTS ***/
+/*** quiz CUSTOM TEXTS ***/
+// quiz-text-xl — Figma Preset 3 body/lead scale · font-text level 7 · LH 120% · Rubik Light default
 .quiz-text-xl {
   color: $quiz-dark-black;
   font-family: $font-family-text;
 
-  @include font-text(7, $fw-light, 1.5);
+  @include font-text(7, $fw-light, 1.2);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--bold {
-    @include font-text(7, $fw-bold, 1.5);
+    @include font-text(7, $fw-bold, 1.2);
   }
 
   &.--justify {
@@ -244,13 +266,20 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 
 }
 
+// quiz-text-md — Figma Preset 5 Regular / Medium (--medium) · font-text level 9 · LH 150%
 .quiz-text-md {
   margin-top: 0;
   padding-top: 0;
   color: $quiz-dark-black;
   font-family: $font-family-text;
 
-  @include font-text(9, $fw-light, 1.5);
+  // Figma Preset 5 (Regular) — 14→24, Rubik Regular, LH 150%
+  @include font-text(9, $fw-normal, 1.5);
+
+  // Figma Preset 5 (Medium) — same scale, Rubik Medium
+  &.--medium {
+    @include font-text(9, $fw-medium, 1.5);
+  }
 
   &.--italic {
     font-style: italic;
@@ -271,25 +300,21 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 
 }
 
+// quiz-text-sm — step below Preset 5 body · font-text level 10 · LH 150%
 .quiz-text-sm {
   margin-top: 0;
   padding-top: 0;
   color: $quiz-dark-black;
-  /******************************************
-    Générer une class avec une line-height fixe
-    format: quiz-text-sm
-    Possible ajout du 'modifier' : quiz-text-sm--italic / quiz-text-sm--bold
-  ********************************************/
   font-family: $font-family-text;
 
-  @include font-text(10, $fw-light, 1.3);
+  @include font-text(10, $fw-light, 1.5);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--bold {
-    @include font-text(10, $fw-bold, 1.3);
+    @include font-text(10, $fw-bold, 1.5);
   }
 
   &.--justify {
@@ -303,25 +328,21 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
 
 }
 
+// quiz-text-xs — extra small fluid · font-text level 11 · LH 150%
 .quiz-text-xs {
   margin-top: 0;
   padding-top: 0;
   color: $quiz-dark-black;
-  /******************************************
-    Générer une class avec une line-height fixe
-    format: quiz-text-sm
-    Possible ajout du 'modifier' : quiz-text-sm--italic / quiz-text-sm--bold
-  ********************************************/
   font-family: $font-family-text;
 
-  @include font-text(11, $fw-light, 1.3);
+  @include font-text(11, $fw-light, 1.5);
 
   &.--italic {
     font-style: italic;
   }
 
   &.--bold {
-    @include font-text(11, $fw-bold, 1.3);
+    @include font-text(11, $fw-bold, 1.5);
   }
 
   &.--justify {
@@ -334,7 +355,62 @@ quiz-flex-text-max-sm > idem mais jusqu'à la taille du viewport en sm
   }
 }
 
-/*** DCI CUSTOM LISTS AND LINKS ***/
+// quiz-text-fixed-20px — Figma Preset 6 · fixed 20px (not fluid) · Rubik Italic · LH 150%
+.quiz-text-fixed-20px {
+  margin-top: 0;
+  padding-top: 0;
+  color: $quiz-dark-black;
+  font-family: $font-family-text;
+  font-size: 20px;
+  font-weight: $fw-normal;
+  font-style: italic;
+  letter-spacing: 0;
+  line-height: 1.5;
+
+  &.--bold {
+    font-style: normal;
+    font-weight: $fw-bold;
+  }
+
+  &.--justify {
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  &.--uppercase {
+    text-transform: uppercase;
+  }
+}
+
+// quiz-text-xxs — smallest fluid step · font-text level 12 · LH 150% (no separate Figma “preset” sheet row; uses map 12)
+.quiz-text-xxs {
+  margin-top: 0;
+  padding-top: 0;
+  color: $quiz-dark-black;
+  font-family: $font-family-text;
+
+  @include font-text(12, $fw-light, 1.5);
+
+  &.--italic {
+    font-style: italic;
+  }
+
+  &.--bold {
+    @include font-text(12, $fw-bold, 1.5);
+  }
+
+  &.--justify {
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  &.--uppercase {
+    text-transform: uppercase;
+  }
+}
+
+/*** quiz CUSTOM LISTS AND LINKS ***/
+// Default list copy — generic body; pair with .quiz-text-* on children if a preset is needed
 ul,
 ol,
 li {
@@ -343,7 +419,7 @@ li {
 }
 
 
-/* Dci links */
+/* quiz links */
 .js-header-link.active-link {
   text-decoration: underline;
   background-color: green;
@@ -352,6 +428,7 @@ li {
 a {
   cursor: pointer;
 
+  // quiz-text-link — legacy nav/link; font-text level 3 (Preset 3 scale) · lg: level 11 uppercase
   &.quiz-text-link {
     @include font-text(3, $fw-bold, 1.3);
     text-underline-offset: 8px;
@@ -368,7 +445,7 @@ a {
       }
     }
 
-    /* Dci Links States */
+    /* quiz Links States */
     &:link {
       opacity: 0.6;
       color: $quiz-dark-black;

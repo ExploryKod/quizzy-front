@@ -1,10 +1,34 @@
 <header class="header">
   <div class="header__toolbar" role="navigation" aria-label="Main">
+    <div class="header__status-container">
+      <div class="header__status-inner">
+      @if ((pingStatus$ | async); as pingStatus) {
+        @switch (pingStatus){
+          @case (PingStatus.KO) {
+            <span class="material-icons header__status header__status--ko" aria-hidden="true">error</span>
+            <span class="header__status-text">{{ 'header.statusTooltip.ko' | translate }}</span>
+          }
+          @case (PingStatus.Partial) {
+            <span class="material-icons header__status header__status--partial" aria-hidden="true">warning</span>
+            <span class="header__status-text">{{ 'header.statusTooltip.partial' | translate }}</span>
+          }
+          @case (PingStatus.Full) {
+            <span class="material-icons header__status header__status--full" aria-hidden="true">check_circle</span>
+            <span class="header__status-text">{{ 'header.statusTooltip.ok' | translate }}</span>
+          }
+        }
+      } @else {
+        <span class="material-icons header__status header__status--unknown" aria-hidden="true">pending</span>
+        <span class="header__status-text">{{ 'header.statusTooltip.pending' | translate }}</span>
+      }
+      </div>
+    </div>
     <div class="header__logo">
       <a routerLink="/" title="Go home"><img src="/assets/logo-white.png" class="header__logo-img" alt="Quizzy logo" /></a>
     </div>
-    <div><a routerLink="/" class="header__title" title="Go home">{{ 'appName' | translate }}</a></div>
-    <div class="header__placeholder">&nbsp;</div>
+    <div class="header__title-container">
+      <a routerLink="/" class="header__title" title="Go home">{{ 'appName' | translate }}</a>
+    </div>
     @if(isLoggedIn$ | async) {
       <div class="header__user">
         <details class="header__user-menu" #userMenu>
@@ -20,31 +44,11 @@
         @if (userDetails$ | async; as user) {
           <span class="header__user-name"> {{user.username}} </span>
           } @else {
-          <span class="header__user-name" [attr.title]="'header.userMissing' | translate"> Anonymous </span>
+          <span class="header__user-name" [attr.title]="'header.userMissing' | translate"> Name missing </span>
           }
         </div>
       </div>
     }
   </div>
-  <div class="header__status-container">
-    @if ((pingStatus$ | async); as pingStatus) {
-      @switch (pingStatus){
-        @case (PingStatus.KO) {
-          <span class="material-icons header__status header__status--ko" aria-hidden="true">error</span>
-          <span class="header__status-text">{{ 'header.statusTooltip.ko' | translate }}</span>
-        }
-        @case (PingStatus.Partial) {
-          <span class="material-icons header__status header__status--partial" aria-hidden="true">warning</span>
-          <span class="header__status-text">{{ 'header.statusTooltip.partial' | translate }}</span>
-        }
-        @case (PingStatus.Full) {
-          <span class="material-icons header__status header__status--full" aria-hidden="true">check_circle</span>
-          <span class="header__status-text">{{ 'header.statusTooltip.ok' | translate }}</span>
-        }
-      }
-    } @else {
-      <span class="material-icons header__status header__status--unknown" aria-hidden="true">pending</span>
-      <span class="header__status-text">{{ 'header.statusTooltip.pending' | translate }}</span>
-    }
-  </div>
+ 
 </header>

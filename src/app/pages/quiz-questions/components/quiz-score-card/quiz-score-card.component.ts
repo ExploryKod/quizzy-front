@@ -10,6 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './quiz-score-card.component.scss',
 })
 export class QuizScoreCardComponent {
+  @Input() quizTitle = '';
+  @Input() quizIcon = '';
   @Input() correctAnswers = 0;
   @Input() totalQuestions = 0;
 }

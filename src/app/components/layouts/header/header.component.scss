@@ -3,6 +3,57 @@
   $inner-width: min(600px, 80%);
   $inner-padding: 0 1.6rem;
 
+  &__status-container {
+    align-self: start;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    margin: 0 auto;
+    order:3;
+  }
+
+  &__status-inner {
+    background-color: var(--element-cta-yellow);
+    border-radius: 0 0 var(--border-radius-header) var(--border-radius-header);
+    padding: 1rem 2rem;
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  &__status {
+    font-size: 3.2rem;
+    line-height: 1;
+    vertical-align: middle;
+
+    &--ko {
+      color: var(--element-error);
+    }
+
+    &--partial {
+      color: orange;
+    }
+
+    &--full {
+      background-color: var(--white);
+      border-radius: 100px;
+      color: var(--element-success-background);
+    }
+
+    &--unknown {
+      color: grey;
+    }
+  }
+
+  &__status-text {
+    font-size: 1.2rem;
+    color: var(--blue-950);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
   &__toolbar {
     display: flex;
     flex-direction: row;
@@ -11,19 +62,8 @@
     margin: 3rem auto 0 auto ;
     height: 80px;
     max-width: $inner-width;
-    background-color: var(--element-primary);
+    background-color: var(--element-header-background-color);
     border-radius: var(--border-radius-header);
-    padding: $inner-padding;
-  }
-
-  &__status-container {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 0.8rem;
-    margin: 0 auto;
-    height: 40px;
-    max-width: $inner-width;
     padding: $inner-padding;
   }
 
@@ -33,6 +73,11 @@
     border-radius: 50%;
     background-color: var(--element-cta-yellow);
     color: var(--element-primary);
+    order: 1;
+  }
+
+  &__title-container {
+    order: 2;
   }
 
   &__title {
@@ -53,36 +98,14 @@
     flex: 1;
   }
 
-  &__status {
-    font-size: 3.2rem;
-    line-height: 1;
-    vertical-align: middle;
 
-    &--ko {
-      color: var(--element-error);
-    }
-
-    &--partial {
-      color: orange;
-    }
-
-    &--full {
-      color: var(--element-success-background);
-    }
-
-    &--unknown {
-      color: grey;
-    }
-  }
-
-  &__status-text {
-    font-size: 1.4rem;
-    color: var(--color-text-primary);
-  }
 
   &__user {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    padding: 0 1.6rem;
+    order: 4;
 
     & > * {
       margin-left: 2rem;
@@ -145,6 +168,8 @@
       background: var(--element-paper, #eee);
     }
   }
+
+
 }
 
 .visually-hidden {
