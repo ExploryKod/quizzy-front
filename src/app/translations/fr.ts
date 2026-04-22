@@ -5,10 +5,10 @@ export const fr = {
   },
   header : {
     statusTooltip: {
-      ko: 'Le serveur est injoignable',
-      partial: 'Le serveur répond, mais pas la base de données',
-      ok: 'Le serveur est en ligne !',
-      pending: 'Vérification du statut serveur...'
+      ko: 'Serveur Ko - Accés aux seuls quiz de démos',
+      partial: 'Accès base de données KO - Accés aux seuls quiz de démos',
+      ok: 'Accés serveur OK',
+      pending: 'Accés serveur en cours...'
     },
     userMissing: 'Utilisateur inconnu (issue #4)',
     userMenu: 'Menu du compte'

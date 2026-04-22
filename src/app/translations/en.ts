@@ -5,10 +5,10 @@ export const en = {
   },
   header: {
     statusTooltip: {
-      ko: 'Server is unreachable',
-      partial: 'Server responds, but not the database',
-      ok: 'Server is online!',
-      pending: 'Checking server status...',
+      ko: 'Server Access KO: only demo quizzes',
+      partial: 'Database Access KO: only demo quizzes',
+      ok: 'Server access OK',
+      pending: 'Server access checking...',
     },
     userMissing: 'Unknown user (issue #4)',
     userMenu: 'Account menu',
