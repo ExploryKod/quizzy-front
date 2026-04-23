@@ -43,6 +43,7 @@
           [quizId]="quiz.id"
           [questionId]="currentQuestion.id"
           [answers]="currentAnswers"
+          [useLocalScoring]="true"
           [isLastQuestion]="isLastQuestion"
           (answerClick)="onAnswerClick($event)"
           (nextQuestion)="onNextQuestion()"
@@ -50,7 +51,7 @@
         ></qzy-quiz-options-list>
       } @else {
         <div class="quiz-questions__empty-state">
-          {{ 'quizQuestions.noAnswers' | translate }}
+          {{ (loadErrorKey || 'quizQuestions.noAnswers') | translate }}
         </div>
       }
     </div>

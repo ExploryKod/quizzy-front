@@ -12,14 +12,40 @@
     <ng-container *ngTemplateOutlet="noAnswers"></ng-container>
   }
 
-  <button
-    type="button"
-    class="quiz-options-list__submit-button"
-    [disabled]="!selectedAnswerTitle || isSubmitting"
-    (click)="onSubmitOrNext()"
-  >
-    {{ (isSubmitted ? (isLastQuestion ? getScoreLabel : nextQuestionLabel) : submitAnswerLabel) | translate }}
-  </button>
+  @if (joinMode) {
+    <button
+      type="button"
+      class="quiz-options-list__submit-button"
+      [disabled]="
+        isSubmitting ||
+        isSubmitted ||
+        (!isSubmitted && !selectedAnswerTitle)
+      "
+      (click)="onSubmitOrNext()"
+    >
+      @if (!isSubmitted) {
+        {{ submitAnswerLabel | translate }}
+      } @else {
+        {{ 'joinQuizPage.waitForHost' | translate }}
+      }
+    </button>
+  } @else {
+    <button
+      type="button"
+      class="quiz-options-list__submit-button"
+      [disabled]="!selectedAnswerTitle || isSubmitting"
+      (click)="onSubmitOrNext()"
+    >
+      {{
+        (isSubmitted
+          ? isLastQuestion
+            ? getScoreLabel
+            : nextQuestionLabel
+          : submitAnswerLabel
+        ) | translate
+      }}
+    </button>
+  }
 </div>
 
 <ng-template #noAnswers>

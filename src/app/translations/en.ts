@@ -129,6 +129,8 @@ export const en = {
     scoreTitle: 'Your score',
     playAgain: 'Play again',
     noAnswers: 'No answers available',
+    notReadyYet:
+      'Quiz is not ready yet: it must contain at least 2 questions and each question must have at least 2 answers.',
   },
   quizEditPage: {
     notFound: 'Quiz not found',
@@ -179,5 +181,8 @@ export const en = {
     connecting: 'Connecting to session...',
     sessionUnavailable:
       'Unable to join this session: code is invalid or quiz was not started by host (host page not opened).',
+    waitForHost: 'Wait for the host for the next question.',
+    questionProgress: 'Question {{current}} / {{total}}',
+    sessionScore: 'Your score for this session: {{correct}} / {{total}}',
   },
 };

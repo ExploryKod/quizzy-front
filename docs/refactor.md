@@ -21,30 +21,28 @@ La section DTO ci-dessous correspond à un premier chantier prioritaire, mais el
 - La documentation Swagger est déjà bien avancée (tags, opérations, réponses).
 - Des DTO dédiés existent déjà pour plusieurs endpoints (`auth`, `users`, `quiz`).
 - Les exemples Swagger (`@ApiProperty`) améliorent la lisibilité des contrats.
-- Une base de validation existe dans le projet via Zod (`ZodValidationPipe` + schemas).
+- `ZodValidationPipe` existe pour des usages ciblés ; le périmètre **HTTP** principal s’appuie sur **class-validator** + `ValidationPipe` global (voir *Journal (validation)*).
 
 ### Écarts / points à améliorer
-- Validation d'entrée non systématique: pas de pipeline global actif sur toutes les routes.
+- Validation d'entrée: un `ValidationPipe` global (`class-validator`) couvre désormais les routes typées (auth, users, quiz) ; d'autres points peuvent rester à durcir ou à documenter (erreurs 400 homogènes, etc.).
 - Certains DTO servent aussi à des usages internes (couplage API/interne), au lieu d'être uniquement des contrats de transport.
 - Fuite de modèles métier dans certains DTO (dépendance à des entités au lieu de DTO dédiés).
 - Couplage entre couches: certains repositories manipulent des DTO d'API directement.
-- Nommage hétérogène (`DTO`/`Dto`) et conventions non uniformes.
-- Réponses d'erreur pas encore complètement homogènes (schémas partagés à formaliser).
+- Nommage : la convention **`…Dto` (PascalCase)** est en cours côté quiz/users (voir *Journal (nommage Dto)*) ; repasser le reste du monorepo si besoin.
+- Schéma **400** partagé : `HttpValidationErrorDto` documenté + enregistré en **`extraModels`** OpenAPI (voir *Journal (OpenAPI — erreur 400)*). D’autres codes (401/404/500) restent par tag si besoin d’alignement.
 
 ### Plan de refactorisation progressif
-1. **Activer la validation à la frontière API**
-   - Choisir une stratégie unique: `class-validator` + `ValidationPipe` global, ou Zod appliqué de façon homogène.
-   - Démarrer par `auth`, puis `users`, puis `quiz`.
+1. **Validation à la frontière API** (fait sur les DTO d’entrée `auth` / `users` / `quiz` : `class-validator` + `ValidationPipe` global) — la suite = homogénéiser les réponses d’erreur, nommage `*Dto`, Zod seulement là où c’est volontaire.
 2. **Séparer DTO externes et payloads internes**
    - Laisser dans `dto/` uniquement les contrats d'API (request/response).
    - Déplacer les structures internes vers des types applicatifs dédiés.
 3. **Découpler persistence et DTO d'API**
    - Faire manipuler aux repositories des modèles métier/types de persistence, pas les DTO HTTP.
    - Ajouter des mappings explicites à l'entrée/sortie des contrôleurs/services.
-4. **Uniformiser conventions et nommage**
+4. **Uniformiser conventions et nommage** *(Quizzam : voir journal étape 4 — DTO d’erreur partagés, payload users, chat/auth/users alignés)*
    - Standardiser sur un seul format (`*Dto` recommandé).
    - Harmoniser les noms et la structure des dossiers DTO.
-5. **Finaliser les contrats de réponse**
+5. **Finaliser les contrats de réponse** *(Quizzam : erreurs HTTP + validation en `extraModels` — étapes 4–5 ; réponses GET mappées avec `plainToInstance` — voir journal étape 5)*
    - Introduire des DTO d'erreur partagés (`ErrorResponseDto`, erreurs de validation).
    - Normaliser les codes/réponses HTTP documentées.
 
@@ -52,7 +50,47 @@ La section DTO ci-dessous correspond à un premier chantier prioritaire, mais el
 - Étape 1: module `auth` (surface réduite, impact rapide).
 - Étape 2: module `users`.
 - Étape 3: module `quiz` (plus volumineux, plus de couplage).
-- Étape 4: harmonisation transverse (noms, erreurs, mapping).
+- Étape 4: harmonisation transverse (noms, erreurs, mapping) — **réalisé** (voir *Journal (étape 4 — harmonisation transverse Quizzam)*).
+
+### Méthode DTO (alignement [Mastering DTOs in NestJS](https://dev.to/cendekia/mastering-dtos-in-nestjs-24e4))
+
+L’article propose une progression **class-validator** + **class-transformer** + **`ValidationPipe` global** + DTO d’**entrée** / **sortie** distincts + `PartialType` pour les mises à jour, et **Swagger** (`@ApiProperty`).
+
+**Adaptation Quizzam** :
+- **Entrée HTTP** : `ValidationPipe` global + DTO décorés (`class-validator`) sur `auth`, `users`, `quiz` — voir *Journal (validation)*. **Zod** (`ZodValidationPipe`, `contract.ts`) reste disponible ailleurs si besoin, sans exiger « tout Zod partout ».
+- **Dév local** : `nx serve` (port du `.env`, souvent 3000) ; **API en Docker watch** : mappage hôte par défaut **3002** (`QUIZZAM_HOST_PORT`) → Swagger `http://localhost:3002/api/docs` pour inspecter / tester les mêmes DTOs.
+- **Comportement** : des **400** apparaissent sur corps invalides (emails, champs vides, `PATCH` hors `op: replace`, etc.) ; les brouillons d’`addQuestion` restent volontairement permisifs côté validation.
+
+**Phases proposées (itérations courtes, comportement métier inchangé sauf point marqué)** :
+1. **Séparer DTO HTTP vs payloads internes** (ex. corps `POST` qui ne contient que ce que le client envoie vraiment ; l’`uid` vient du JWT, pas du body).
+2. **Réponse dédiée** pour les `GET` quand aujourd’hui le même type sert de « vue » et de persistance (même champs, noms de classes distincts + `@ApiProperty`).
+3. **Mises à jour (PATCH)** : `PartialType` / équivalent pour les DTO d’update une fois les types de base stabilisés.
+4. **Poursuivre** : DTO d’erreur partagés (`HttpValidationErrorDto` enregistré en `extraModels` Swagger dans `main.ts`), `PartialType` / PATCH ciblé, homogénéisation `*Dto` (voir *Écarts*).
+
+**Journal (étape 1 — users)** : introduction de `CreateUserProfileBodyDto` (champ `username` uniquement) pour `POST /api/users` ; côté application le typage interne a évolué en `CreateUserProfilePayload` (étape 4). Aucun changement de règle métier : l’`uid` était déjà pris sur le token, pas sur le body.
+
+**Journal (étape 2 — quiz create)** : `CreateQuizRequestBodyDto` (`title`, `description` seuls) pour `POST /api/quiz` et Swagger ; côté commande / dépôts, le type applicatif `CreateQuizPayload` (incl. `userId`) porte l’`userId` issu du JWT, distinct du corps HTTP.
+
+**Journal (plan refactor — étape 2, module `quiz` : DTO HTTP vs payloads)** : les contrats **Swagger / corps HTTP** restent dans `quizzam/src/quiz/dto/` (y compris `answer-question.schemas.ts` pour `AnswerDto` / `QuestionDto` documentés). Les entrées **application / repository** (après normalisation côté contrôleur ou hors HTTP) sont typées par des **payloads** dans `quizzam/src/quiz/payloads/` : `DecodedToken`, `CreateQuizPayload`, `CreateQuestionPayload`, `StartQuizPayload`. Les commandes, requêtes, adaptateurs (Mongo, in-memory, Firebase) et le contrôleur importent ces types pour le domaine interne, sans mélanger avec les DTOs de transport. Vérification : `nx run quizzam:build` et `nx run quizzam:test` (depuis le répertoire `quizzam/` de l’espace Nx).
+
+**Journal (plan refactor — étape 3, module `quiz` : persistance / domaine vs DTO HTTP)** : le port `IQuizRepository` et les adaptateurs n’importent plus les classes DTO de `quiz/dto` pour les listes, snapshots d’exécution, résultats de suppression et opérations de patch. Des types **sans décorateurs Swagger** dans `quizzam/src/quiz/models/` ciblent le domaine / la persistance : `UserQuizzesList`, `QuizSnapshot`, `DeleteQuizResult`, `JsonPatchReplaceOperation`. Les DTO `GetUserQuizDto`, `DeletedQuizResponseDto`, `PatchOperation` (classe) restent à la **frontière HTTP** (validation, `@Api*`) ; le contrôleur **mappe** le corps `PATCH` vers `JsonPatchReplaceOperation[]` avant la commande. `contract.ts` s’appuie sur ces modèles pour les types côté Zod. Vérification : `nx run quizzam:build` + `nx run quizzam:test` (répertoire `quizzam/`).
+
+**Journal (étape 5 — réponses HTTP / `plainToInstance`)** : **Users** — `UserRecord` dans `users/models/` pour les lectures dépôt / requête ; `FindUserDto` remplacé par **`UserProfileResponseDto`** (DTO de sortie pur avec `@Expose`) ; `GET /api/users/me` retourne `plainToInstance(UserProfileResponseDto, record, { excludeExtraneousValues: true })`. **Quiz** — `GetQuizByIdResponseDto` enrichi de `@Expose` ; `GET /api/quiz/:id` construit la réponse avec `plainToInstance` depuis l’entité `Quiz`. **Non couvert ici** : `PartialType` sur des updates REST « champs plats » (le quiz utilise du JSON Patch). Vérification : `nx run quizzam:build` + `nx run quizzam:test`.
+
+**Journal (étape 4 — harmonisation transverse Quizzam)** : **OpenAPI** — `HttpExceptionBodyDto` (corps type Nest pour 401/403/404/409/500 hors validation stricte) enregistré en `extraModels` à côté de `HttpValidationErrorDto` ; décorateurs `ApiHttpUnauthorized`, `ApiHttpNotFound`, `ApiHttpForbidden`, `ApiHttpConflict`, `ApiHttpInternalServerError` dans `core/dto/api-http-responses.ts`, appliqués aux contrôleurs `quiz`, `auth`, `users`, `ping`. **Users** — suppression de `CreateUserDto` côté dépôt ; `CreateUserProfilePayload` dans `users/payloads/` ; commande / `IUserRepository` / adaptateurs sur ce type. **Auth / users** — `class-transformer` `@Transform` (trim, email en minuscules) sur les corps JWT et `CreateUserProfileBodyDto` ; `users` : `generateDecodedToken` typé `Promise<DecodedToken>`. **Chat** — `AddMessageDto` avec `class-validator` + `ApiProperty` et `ValidationPipe` sur l’abonnement WebSocket. Vérification : `nx run quizzam:build` + `nx run quizzam:test`.
+
+**Journal (validation — frontière API)** : `ValidationPipe` global dans `main.ts` (`transform`, `whitelist: true`, `forbidNonWhitelisted: false`) ; décorateurs `class-validator` sur les DTO d’entrée concernés (auth, users, quiz). Les **brouillons** d’ajout de question restent volontairement souples (`CreateQuestionDraftDto` : pas de `ValidateNested` sur `answers`) ; le **remplacement** de question (`PUT .../questions/...`) valide `UpdateQuestionDto` + `AnswerDto` de façon stricte. Le `PATCH` quiz (tableau d’opérations) passe par `ParseArrayPipe` et `PatchOperation` (`op` limité à `replace`). Le spec `update-quiz-command.spec.ts` utilise `op: 'replace' as const` pour respecter le type `PatchOperation`. Vérification : `nx run quizzam:test` au vert.
+
+**Journal (nommage Dto — harmonisation sufixe `*Dto`)** : renommage des types `quiz` qui utilisaient encore le suffixe `...DTO` en `...Dto` (`AnswerDto`, `QuestionDto`, `CreateQuestionDto`, `UpdateQuestionDto`, `QuizDto`, `GetQuizByIdResponseDto`, `CreateQuizDto`, `DeletedQuizResponseDto`, `StartQuizDto`). Côté **users** : `FindUserDTO` → `FindUserDto` (puis **`UserProfileResponseDto`** + `UserRecord` à l’étape 5). Aucun changement de champs ni de sémantique sur les cycles intermédiaires, uniquement les identifiants TypeScript / exports. Build + `quizzam:test` vérifiés.
+
+**Journal (OpenAPI — erreur 400 partagée)** : `HttpValidationErrorDto` est passé en troisième argument de `SwaggerModule.createDocument` via **`extraModels`**, afin qu’il figure toujours dans **`components.schemas`** (Swagger UI `/api/docs`, codegen, inspection hors route spécifique). Rappel dans [quizzam/docs/api.md](../../quizzam/docs/api.md).
+
+**Journal (étape 2 — auth, doc seulement)** : JSDoc sur les DTO JWT pour distinguer corps de requête (`register` / `login`) et réponse (`JwtAuthResponseDto` / `JwtAuthUserDto`), sans renommage de classes.
+
+### Contrat `GET /api/quiz/:id` — champ `id` dans le corps de réponse
+- **Constat** : le front historique typait `Quiz` avec un `id` obligatoire, alors que le corps HTTP ne contenait que `title`, `description`, `questions` (l’identifiant n’apparaissait que dans l’URL).
+- **Risque fonctionnel** : stockage ou clés dérivées (`quiz-score:${quiz.id}`, etc.) pouvant recevoir `undefined` à l’exécution malgré le typage.
+- **Décision** : exposer explicitement `id` dans la réponse (même valeur que le segment `:id`), DTO `GetQuizByIdResponse` côté Quizzam, descriptions et exemples dans Swagger ; rappel opérationnel dans [quizzam/docs/api.md](../../quizzam/docs/api.md).
 
 ## Refactor des tests
 
@@ -74,7 +112,7 @@ La section DTO ci-dessous correspond à un premier chantier prioritaire, mais el
   - branche Firebase conservée pour `AUTH_TYPE=FIREBASE`,
   - branche JWT ajoutée (`/api/auth/register`, `/api/auth/login`) pour `AUTH_TYPE=JWT`,
   - création de profil utilisateur rendue tolérante (`200`, `201`, `409`) pour éviter les faux échecs.
-- **Brouillons `addQuestion` (alignement front historique)** : le corps accepté est un draft (`CreateQuestionDraftDto` : `title?`, `answers?`), normalisé en `CreateQuestionDTO` dans le contrôleur. Titre minimal, réponses vides, plusieurs `isCorrect: true` sont acceptés à l'ajout ; la validation stricte (titre, ≥2 choix, un seul correct) reste le fait du **démarrage** du quiz (`start`), pas de `POST .../questions`. Les e2e et tests unitaires du contrôleur reflètent ce contrat.
+- **Brouillons `addQuestion` (alignement front historique)** : le corps accepté est un draft (`CreateQuestionDraftDto` : `title?`, `answers?`), normalisé en `CreateQuestionPayload` dans le contrôleur. Titre minimal, réponses vides, plusieurs `isCorrect: true` sont acceptés à l'ajout ; la validation stricte (titre, ≥2 choix, un seul correct) reste le fait du **démarrage** du quiz (`start`), pas de `POST .../questions`. Les e2e et tests unitaires du contrôleur reflètent ce contrat.
 
 ### Points restants à traiter
 - Aligner les assertions e2e avec les contrats API actuels (ex: `ping.spec.ts`).
@@ -191,7 +229,7 @@ La section DTO ci-dessous correspond à un premier chantier prioritaire, mais el
 - Ajustement e2e pour environnement multi-port :
   - `e2e/src/constants.ts` lit désormais `HOST`/`PORT` (fallback `localhost:3000`) au lieu d'un `defaultUrl` figé.
 - Vérification `ping.e2e` :
-  - exécution via `PORT=3002 nx run e2e:e2e -- --runInBand --testPathPattern=src/server/ping.spec.ts` => succès (`1` suite, `2` tests).
+  - exécution via `PORT=3002 nx run e2e:e2e -- --runInBand --testPathPattern=src/server/ping.spec.ts` => succès (`1` suite, `2` tests) — ici `PORT=3002` cible l’**API déjà** exposée (ex. Docker), pas un second `nx serve` sur ce port.
 
 ### Audit actuel de la couverture unitaire
 - Vérification effectuée via la configuration Jest + détection des fichiers exécutés.
@@ -251,7 +289,7 @@ Sources inspiration :
 - Correctif data/index en environnement local Mongo :
   - suppression des index historiques problématiques `questions.id_1` et `executionId_1` dans `quizapp.quizzes`.
 - Vérification finale :
-  - `PORT=3002 AUTH_TYPE=JWT nx run e2e:e2e -- --runInBand` => **3 suites passées, 27 tests passés**.
+  - `PORT=3002 AUTH_TYPE=JWT nx run e2e:e2e -- --runInBand` => **3 suites passées, 27 tests passés** (l’e2e pointe sur l’API joignable à ce port ; en parallèle d’un *watch* Docker sur 3002, ne pas lancer un autre processus sur 3002 — voir [quizzam/README.md](../../quizzam/README.md#tests-e2e-http)).
 - Nettoyage bruit de logs e2e :
   - `e2e/src/helpers/quiz.helper.ts`
     - suppression d'un `console.log` de debug sur `addQuestion`,
@@ -259,3 +297,4 @@ Sources inspiration :
     - garde-fou si `quizId` absent.
 - Vérification post-nettoyage :
   - suite e2e complète toujours verte (`3` suites, `27` tests).
+- Validation à la frontière API (détail : section **DTO**, *Journal (validation)*) : `nx run quizzam:test` au vert après typage `PatchOperation` dans `update-quiz-command.spec.ts`.

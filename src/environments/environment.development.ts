@@ -2,7 +2,7 @@ export const environment = {
   baseUrl: 'http://localhost:3002',
   apiUrl: 'http://localhost:3002/api',
   fakeApiUrl: 'assets/data/data.json',
-  useFakeApi: true,
+  useFakeApi: false,
   useFakeAuth: true,
   authType: 'JWT', // 'JWT' or 'FIREBASE' - default to JWT
   // You will need to create a Firebase project and replace the configuration here with yours

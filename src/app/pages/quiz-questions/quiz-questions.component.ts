@@ -32,6 +32,8 @@ export class QuizQuestionsComponent implements OnInit {
   currentQuestionIndex = 0;
   showScoreCard = false;
   finalScore = { correct: 0, total: 0 };
+  loadErrorKey: 'quizQuestions.notReadyYet' | 'quizQuestions.noAnswers' | null =
+    null;
 
   ngOnInit(): void {
     const routeQuizId = this.route.snapshot.paramMap.get('id');
@@ -41,11 +43,13 @@ export class QuizQuestionsComponent implements OnInit {
     }
     this.quizService.getAll().subscribe((response) => {
       if (response.status !== 'OK' || response.data.length === 0) {
+        this.loadErrorKey = 'quizQuestions.noAnswers';
         return;
       }
       this.quiz = response.data[0];
       this.currentQuestionIndex = 0;
       this.showScoreCard = false;
+      this.loadErrorKey = null;
     });
   }
 
@@ -103,11 +107,28 @@ export class QuizQuestionsComponent implements OnInit {
   private loadQuizById(quizId: string) {
     this.quizService.get(quizId).subscribe((response) => {
       if (response.status !== 'OK' || !response.data) {
+        this.loadErrorKey = 'quizQuestions.noAnswers';
         return;
       }
+
+      if (!this.isReadyForPublicPlay(response.data)) {
+        this.loadErrorKey = 'quizQuestions.notReadyYet';
+        return;
+      }
+
       this.quiz = response.data;
       this.currentQuestionIndex = 0;
       this.showScoreCard = false;
+      this.loadErrorKey = null;
     });
+  }
+
+  private isReadyForPublicPlay(quiz: Quiz): boolean {
+    if (!Array.isArray(quiz.questions) || quiz.questions.length < 2) {
+      return false;
+    }
+    return quiz.questions.every(
+      (question) => Array.isArray(question.answers) && question.answers.length >= 2
+    );
   }
 }
