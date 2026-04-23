@@ -1,0 +1,293 @@
+/**********************************
+VARIABLES SCSS
+Pattern : {breakpoint}-{prefix}-{nom}-{variante}-{state}-{emplacement}
+breakpoints: voir $grid-breakpoints - ex: max-md = media queries medium max-width / md = media queries medium min-width
+prefix: quiz si propre au design system du site
+variante: couleur, taille de l'objet lui-même (sm, lg ...)
+state: tout état css ou pseudo-class comme hover, focus, visited ...
+emplacement (optionnel): section du site auquel la variable appartient (ex: intro, team ...)
+***********************************/
+
+/**** Path ****/
+// Resolved relative to global styles entry (src/scss/styles.scss), not each partial.
+$fonts-path: './fonts';
+$pictures-path: '../../assets';
+$logos-path: '../../assets';
+$quiz-logo-path: '#{$logos-path}/logo.png';
+$icomoon-font-path: '#{$fonts-path}/icomoon/fonts';
+
+/**** Fonts ****/
+$roboto: '';
+$raleway: '';
+$font-family: 'Rubik';
+$font-family-title: 'Rubik';
+$font-family-text: 'Rubik';
+
+
+/**** Colors - Defined by website design system ****/
+
+//general colors
+$quiz-neutral-bg: #ffffff;
+$quiz-dark-blue: #142cac;
+$quiz-dark-black: #000000;
+$quiz-medium-grey: #cccccc;
+$quiz-beige: #f4ece4;
+
+// text colors
+$quiz-title-blue: $quiz-dark-blue;
+$quiz-text-dark-color: $quiz-dark-black;
+$quiz-text-light-color: $quiz-neutral-bg;
+
+// btn colors
+$quiz-btn-color: $quiz-dark-blue;
+$quiz-btn-color-hover: $quiz-dark-black;
+$quiz-btn-bg-color: $quiz-neutral-bg;
+
+// semantic colors
+$state-colors: (
+  'danger': #dc3545,
+  'warning': #ffc107,
+  'info': #17a2b8,
+  'success': #28a745
+);
+
+// UI palette exported as CSS custom properties in :root
+$quiz-colors: (
+  'white': #ffffff,
+  'black': #000000,
+  'grey-50': #f4f6fa,
+  'grey-500': #626c7f,
+  'blue-50': #ebf0ff,
+  'blue-100': #edf1f9,
+  'blue-300': #abc1e1,
+  'blue-500': #306aff,
+  'blue-850': #394d66,
+  'blue-900': #313551,
+  'blue-950': #2d3949,
+  'green-100': #e0fdef,
+  'green-500': #2fd887,
+  'purple-100': #f6e7ff,
+  'purple-600': #a729f5,
+  'purple-700': #7d3780,
+  'purple-secondary': #ae61de,
+  'orange-50': #fff5ed,
+  'orange-400': #ff7e35,
+  'red-500': #ee5454
+);
+
+// Semantic/UI element colors exported as --color-* custom properties in :root
+$quiz-element-colors: (
+  'quiz-box-shadow': rgba(0, 0, 0, 0.15) 0px 2px 8px,
+  'button-quiz': var(--white),
+  'text-dark': var(--blue-900),
+  'button-submit-color': var(--purple-600),
+  'button-submit-text-color': var(--white),
+  'header-background-color': var(--blue-950),
+  'primary': #7d3780,
+  'paper-lighter': #f7f4e3,
+  'paper': #f2eecb,
+  'paper-darker': #e6e1b3,
+  'paper-complementary': #cbcff2,
+  'paper-complementary-darker': #b3b3e6,
+  'text-secondary': var(--white),
+  'error': #9a1d1d,
+  'error-background': #ffb2b2,
+  'success-background': #63a163,
+  'success-border': #14a914,
+  'primary-background': #a4a8c0,
+  'cta-yellow': #e9bd43
+);
+
+/*** Logos ***/
+$gl-logo-color: $quiz-dark-black;
+$gl-svg-size: 32px;
+
+$chevron-size-array: (
+  1: 30,
+  2: 24,
+  3: 20,
+  4: 18,
+  5: 16,
+  6: 12
+);
+
+/**** Breakpoints ****/
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1440px,
+  fhd: 1900px,
+  overfhd: 1921px
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px,
+  fhd: 1440px
+);
+
+/**** font-weights ****/
+$fw-light: 300;
+$fw-medium: 500; // Rubik "Medium" in Figma (not the same as $fw-semibold)
+$fw-normal: normal;
+$fw-bold: bold;
+$fw-semibold: 600;
+
+/**** text size ****/
+
+// titles size if used outside typography functions (desktop max; matches Figma / $text-sizes-xl-array)
+$title-size-xl: 144px;
+$title--size-lg: 64px;
+$title--size-md: 36px;
+$title-size-sm: 28px;
+
+// paragraph, links, texts sizes if used outside typography functions
+$text-size-xl: 20px;
+$text-size-lg: 18px;
+$text-size-md: 17px;
+$text-size-normal: 16px;
+$text-size-sm: 15px;
+$text-size-xs: 13px;
+$text-size-xxs: 10px;
+
+// Arrays used in clamp typography functions (clamp(text-size-mobile, viewport-w, text-sizes-xl))
+// Pairs aligned with Figma presets (mobile / desktop @ 1920 clamp max). See .quiz-title-* / .quiz-text-* in _typography.scss.
+// Index N matches .size-N utilities and @include font-text(N, …) level.
+// 1 Preset 1 | 2 Preset 2 | 3 Preset 3 | 4 Preset 4 | 5 Preset 4 (title-sm) | 6 title-xs | 7 text-xl | 8 utility | 9 quiz-text-md | 10 quiz-text-sm | 11 quiz-text-xs | 12 quiz-text-xxs
+$text-sizes-mobile-array: (
+  1: 88,
+  2: 40,
+  3: 30,
+  4: 18,
+  5: 18,
+  6: 14,
+  7: 20,
+  8: 16,
+  9: 14,
+  10: 13,
+  11: 12,
+  12: 10
+);
+
+$text-sizes-xl-array: (
+  1: 144,
+  2: 64,
+  3: 36,
+  4: 28,
+  5: 28,
+  6: 20,
+  7: 36,
+  8: 17,
+  9: 24,
+  10: 16,
+  11: 13,
+  12: 10
+);
+
+/**** Spacings -- padding (p), margin (m) -- ****/
+
+/** Header spacings **/
+
+// header height after lg breakpoint
+$lg-header-min-h: 100px;
+$lg-header-mt: 39px;
+$lg-header-h: $lg-header-min-h + $lg-header-mt * 2;
+$xl-header-h: $lg-header-min-h + $lg-header-mt;
+// écarts sur axe y entre les élèments de navigation (padding-y)
+$header-nav-item-py: 40px;
+$lg-header-nav-item-py: 20px;
+
+// burger menu > margin vertical et margin horizontal
+$header-burger-my: 20px;
+$header-burger-mx: 10px;
+
+// Autres paddings du header
+$header-p-top: 80px;
+$header-p-left: 12px;
+
+
+/** Sections spacings **/
+
+// logo section vertical margin
+$logo-section-my: 80px;
+$section-top: 100px;
+
+/* -- HOME PAGE SECTIONS -- */
+// Skills section title top
+$main-title-top: 100px;
+
+/* Titles margin-top / bottom */
+$max-lg-quiz-title-xl-mt-intro: 20px;
+$quiz-title-xl-mt-intro: 0;
+$quiz-title-xl-mb-team : 46px;
+$quiz-team-name-mb: 20px;
+
+
+/*
+quiz-xl-title a des margin-bottom différentes selon les sections (default : 26px)
+Chaque nom de section doit être exactement celui présent dans la class dans la page "main" (ex: "main__intro-section" --> clé = intro-section)
+*/
+$quiz-title-xl-mb: 26px;
+$quiz-title-xl-mb-arr: (
+  intro-section: 26px,
+  skills-section:26px,
+  team-section: 46px,
+  fees-section: 69px,
+  contact-section: 18px
+);
+
+/* -- LEGAL PAGE SECTIONS -- */
+$max-lg-quiz-title-lg-mt-legal: 30px;
+$lg-quiz-title-lg-mt-legal: calc($lg-header-h + 40px);
+
+/**** z-index ****/
+$z-index-max: 3;
+$z-index-high: 2;
+$z-index-medium: 1;
+$z-index-normal: 0;
+$z-index-less: -1;
+$z-index-max-less: -2;
+
+/**** border radius par section ****/
+$hamburger-wrapper-br: 0 0 10px 0;
+$contact-us-br: 30px 0 0 30px;
+
+/**** border radius par taille ****/
+$border-radius-sm: 5px;
+$border-radius-md: 10px;
+$border-radius-xl: 20px;
+
+
+/*** SECTIONS SPECIFICITIES ***/
+
+
+/*
+  TEAM SECTION
+*/
+
+// Use these variables to change cards layout key points (md = beyond 992px viewport width)
+$quiz-card-w: 90vw;
+$max-md-quiz-card-w: 650px;
+// Content height need to go beyond the height of the longest text (header + paragraph) among cards texts
+$md-quiz-card-content-h: 400px;
+// The gap between image & text
+$md-quiz-card-content-gap: 19px;
+$md-quiz-card-img-w: 240px;
+$quiz-card-content-text-my: 10px;
+
+// tabs are the interventions domains of lawyers under card-content
+$quiz-card-tab-w: 100%;
+// Interventions domains tab: Used to correct a problem with some tabs that were not at the bottom of the team card
+$quiz-card-tab-mt: 13px;
+
+/*
+intervention domain content height
+Reason: keep blue border line at the same level once tabs are opened
+*/
+$xl-quiz-tab-content-minh-checked: 275px;

@@ -1,0 +1,15 @@
+@use 'scss/base/buttons' as *;
+:host {
+  display: block;
+  width: 100%;
+}
+
+.quiz-options-list {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+
+  &__submit-button {
+   @extend .simple-button;
+  }
+}

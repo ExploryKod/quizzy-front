@@ -1,0 +1,37 @@
+.join {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+
+  padding: 2rem 4rem;
+  margin-top: 4rem;
+  border: 1px solid var(--element-primary);
+  border-radius: .5rem;
+
+  &__form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  button {
+    height: 56px;
+  }
+
+  &__field {
+    width: minmax(300px, 80%);
+  }
+
+  &__button-container {
+    width: minmax(300px, 80%);
+    display: flex;
+    justify-content: center;
+
+    button {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,55 @@
+<div class="quiz-options-list">
+  @for (answer of answers; track answer.title; let index = $index) {
+    <qzy-button-option
+      [buttonOption]="toButtonOption(answer, index)"
+      [isSelected]="isSelected(answer)"
+      [isCorrect]="isCorrect(answer)"
+      [isIncorrect]="isIncorrect(answer)"
+      [disabled]="isSubmitted"
+      (buttonClick)="onAnswerClick(answer)"
+    ></qzy-button-option>
+  } @empty {
+    <ng-container *ngTemplateOutlet="noAnswers"></ng-container>
+  }
+
+  @if (joinMode) {
+    <button
+      type="button"
+      class="quiz-options-list__submit-button"
+      [disabled]="
+        isSubmitting ||
+        isSubmitted ||
+        (!isSubmitted && !selectedAnswerTitle)
+      "
+      (click)="onSubmitOrNext()"
+    >
+      @if (!isSubmitted) {
+        {{ submitAnswerLabel | translate }}
+      } @else {
+        {{ 'joinQuizPage.waitForHost' | translate }}
+      }
+    </button>
+  } @else {
+    <button
+      type="button"
+      class="quiz-options-list__submit-button"
+      [disabled]="!selectedAnswerTitle || isSubmitting"
+      (click)="onSubmitOrNext()"
+    >
+      {{
+        (isSubmitted
+          ? isLastQuestion
+            ? getScoreLabel
+            : nextQuestionLabel
+          : submitAnswerLabel
+        ) | translate
+      }}
+    </button>
+  }
+</div>
+
+<ng-template #noAnswers>
+  <div class="no-answers">
+    {{ 'quizQuestions.noAnswers' | translate }}
+  </div>
+</ng-template>

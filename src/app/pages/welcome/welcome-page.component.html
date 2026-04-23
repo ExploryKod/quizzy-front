@@ -1,15 +1,20 @@
 <div class="welcome-page page">
-  <h1>{{ 'welcomePage.title' | translate }}</h1>
-  <div class="welcome-page__description">
-    {{ 'welcomePage.description' | translate }}
+  <div class="welcome-page__intro">
+    <div class="welcome-page__text-wrapper">
+      <h1 class="welcome-page__title">
+       {{ 'welcomePage.pretitle' | translate }}
+       <span class="welcome-page__end-title">{{ 'welcomePage.title' | translate }}</span>
+      </h1>
+      <div class="welcome-page__description">
+        {{ 'welcomePage.description' | translate }}
+      </div>
+    </div>
+    <div class="welcome-page__quizzes-wrapper">
+      @if (quizzes$ | async; as quizzes) {
+        @if (quizzes.status === 'OK') {
+          <qzy-quiz-button-list [quizzes]="quizzes.data" (quizClick)="onQuizButtonClick($event)"></qzy-quiz-button-list>
+        }
+      }
+    </div>
   </div>
-
-  <qzy-join></qzy-join>
-
-  @if (isLogged$ | async) {
-    <qzy-chat></qzy-chat>
-    <qzy-dashboard></qzy-dashboard>
-  } @else {
-    <qzy-not-logged></qzy-not-logged>
-  }
 </div>

@@ -1,21 +1,28 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { JoinComponent } from './components/join/join.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NotLoggedComponent } from './components/not-logged/not-logged.component';
-import { ChatComponent } from './components/chat/chat.component';
-import { AuthService } from '../../services/auth/auth.service';
+import { QuizButtonListComponent } from './components/quiz-button-list/quiz-button-list.component';
+import { QuizService } from '../../services/quiz.service';
+import { Quiz } from '../../model/quiz';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'qzy-welcome-page',
   standalone: true,
-  imports: [CommonModule, TranslateModule, JoinComponent, DashboardComponent, NotLoggedComponent, ChatComponent],
+  imports: [CommonModule, TranslateModule, QuizButtonListComponent],
   templateUrl: './welcome-page.component.html',
   styleUrl: './welcome-page.component.scss',
 })
 export class WelcomePageComponent {
-  private readonly authService = inject(AuthService);
-  isLogged$ = this.authService.isLogged$;
+  private readonly quizService = inject(QuizService);
+  private readonly router = inject(Router);
+  quizzes$ = this.quizService.getAll();
 
+  onQuizButtonClick(quiz: Quiz) {
+    if (!quiz.id) {
+      console.log('Quiz has no id, cannot navigate to questions page');
+      return;
+    }
+    this.router.navigateByUrl(`/quiz-questions/${quiz.id}`);
+  }
 }

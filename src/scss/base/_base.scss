@@ -1,0 +1,129 @@
+// -----------------------------------------------------------------------------
+// This file contains very basic styles.
+// -----------------------------------------------------------------------------
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/responsive' as bp;
+
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  color: $quiz-text-dark-color;
+  font-family: var(--font-family), sans-serif;
+  font-size: 100%;
+  line-height: 1;
+ 
+  &.no-scroll {
+    margin-right: var(--scrollbarsize, 0);
+    overflow: hidden;
+  }
+}
+
+/* Page-scoped background (body class is set at runtime in AppComponent). */
+body.page-home, body.page-join, body.page-my-quizzes {
+  background-image: url('/assets/patterns/pattern-background-mobile-light.svg');
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+@include bp.media-breakpoint-up(md) {
+  body.page-home, body.page-join, body.page-my-quizzes {
+    background-image: url('/assets/patterns/pattern-background-tablet-light.svg');
+    background-position: center center;
+  }
+}
+
+@include bp.media-breakpoint-up(lg) {
+  body.page-home, body.page-join, body.page-my-quizzes {
+    background-image: url('/assets/patterns/pattern-background-desktop-light.svg');
+  }
+}
+
+/* Force app-wide typography to Rubik, including Material defaults */
+button,
+input,
+select,
+textarea,
+table,
+.mat-typography,
+.mat-mdc-typography,
+.mdc-typography {
+  font-family: var(--font-family), sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-title), sans-serif;
+}
+
+p,
+li,
+td,
+th,
+label {
+  font-family: var(--font-family-text), sans-serif;
+}
+
+/* Material button labels can keep MDC sans-serif defaults unless explicitly overridden */
+.mat-mdc-raised-button .mdc-button__label,
+.mat-mdc-unelevated-button .mdc-button__label,
+.mat-mdc-outlined-button .mdc-button__label,
+.mat-mdc-button .mdc-button__label {
+  font-family: var(--font-family), sans-serif;
+}
+
+/* Material input/placeholder typography (MDC can override with higher specificity) */
+.mat-mdc-form-field .mat-mdc-input-element.mdc-text-field__input,
+.mat-mdc-form-field .mdc-text-field__input {
+  font-family: var(--font-family-text), sans-serif !important;
+}
+
+.mat-mdc-form-field .mat-mdc-input-element.mdc-text-field__input::placeholder,
+.mat-mdc-form-field .mdc-text-field__input::placeholder,
+.mat-mdc-form-field .mat-mdc-input-element.mdc-text-field__input::-webkit-input-placeholder,
+.mat-mdc-form-field .mdc-text-field__input::-webkit-input-placeholder {
+  font-family: var(--font-family-text), sans-serif !important;
+}
+
+/* ==== Page container === */
+.page {
+  margin: 0 auto;
+  max-width: var(--container-maxw);
+}
+
+
+
+/* ==== Alerts === */
+.alert {
+  font-size: 1.6rem;
+  padding: 2rem 4rem;
+  margin: 2rem 4rem;
+  text-align: center;
+  color: var(--element-error);
+  border: 1px solid currentColor;
+  border-radius: .5rem;
+  background-color: var(--element-error-background);
+}
+
+.info {
+  font-size: 1.6rem;
+  padding: 2rem 4rem;
+  margin: 2rem 4rem;
+  text-align: center;
+  color: var(--element-primary);
+  border: 1px solid currentColor;
+  border-radius: .5rem;
+  background-color: var(--element-primary-background);
+}
+
+.form-error {
+  color: var(--element-error);
+  font-size: 1.2rem;
+}

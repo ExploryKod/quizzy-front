@@ -1,0 +1,43 @@
+@use '../abstracts/variables' as *;
+
+/* Static Rubik faces */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  src: url('#{$fonts-path}/Rubik/Rubik-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 500;
+  src: url('#{$fonts-path}/Rubik/Rubik-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: italic;
+  font-weight: 400;
+  src: url('#{$fonts-path}/Rubik/Rubik-Italic.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* Variable Rubik faces */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('#{$fonts-path}/Rubik-VariableFont_wght.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  font-style: italic;
+  font-weight: 100 900;
+  src: url('#{$fonts-path}/Rubik-Italic-VariableFont_wght.ttf') format('truetype');
+  font-display: swap;
+}

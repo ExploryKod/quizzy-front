@@ -1,0 +1,105 @@
+@use '../abstracts/variables' as var;
+@use '../abstracts/mixins' as mx;
+
+
+//
+// Make all elements from the DOM inherit from the parent box-sizing
+// Since `*` has a specificity of 0, it does not override the `html` value
+// making all elements inheriting from the root box-sizing value
+// See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+//
+
+* {
+    margin:0;
+    padding: 0;
+    box-sizing: inherit;
+  }
+
+  
+  html,
+  body {
+    overflow-x: hidden;
+    border: 0;
+    vertical-align: baseline;
+    scroll-behavior: smooth;
+  }
+
+  /* Root box sizing value defined here */
+  html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    height:100%;
+  }
+    
+  a {
+    transition: color ease-in-out 0.2s;
+    text-decoration: none;
+  
+    @include mx.on-event() {
+      text-decoration: underline;
+    }
+  }
+  
+  ul,
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  blockquote::before,
+  blockquote::after,
+  q::before,
+  q::after {
+    content: '';
+    content: none;
+  }
+  
+  table {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  
+  article,
+  aside,
+  details,
+  figcaption,
+  figure,
+  footer,
+  header,
+  hgroup,
+  menu,
+  nav,
+  section {
+    display: block;
+  }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    font-weight: 400;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* remove animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

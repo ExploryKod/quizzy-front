@@ -1,0 +1,5 @@
+@use 'scss/base/buttons' as btn;
+
+.button-submit {
+   @extend .simple-button;
+}

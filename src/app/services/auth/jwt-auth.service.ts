@@ -1,6 +1,6 @@
 import { inject, Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { messagesFromAuthHttpError } from './auth-http-error';
 
@@ -14,6 +14,14 @@ export interface JwtAuthResponse {
   token: string;
   user: JwtUser;
 }
+
+type FakeUserRecord = {
+  _id: string;
+  email: string;
+  username: string;
+};
+
+type FakeUsersResponse = FakeUserRecord | FakeUserRecord[];
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +43,53 @@ export class JwtAuthService {
     }
   }
 
+  private createFakeJwt(email: string): string {
+    const payload = btoa(JSON.stringify({
+      sub: email,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+    }));
+    return `fake.${payload}.token`;
+  }
+
+  private asFakeUsers(payload: FakeUsersResponse): FakeUserRecord[] {
+    return Array.isArray(payload) ? payload : [payload];
+  }
+
+  private fakeLogin(email: string, password: string): Observable<{ isSuccess: boolean; errors: string[] }> {
+    return this.httpClient.get<FakeUsersResponse>(environment.fakeUsersUrl).pipe(
+      map((payload) => this.asFakeUsers(payload)),
+      map((users) => users.find((user) => user.email.toLowerCase() === email.trim().toLowerCase())),
+      map((user) => {
+        if (!user) {
+          return { isSuccess: false, errors: ['Invalid credentials'] };
+        }
+
+        // For first static deploy, accept a single known demo password.
+        if (password !== 'password123') {
+          return { isSuccess: false, errors: ['Invalid credentials'] };
+        }
+
+        const fakeUser: JwtUser = {
+          uid: user._id,
+          email: user.email,
+          username: user.username,
+        };
+        this.storeToken(this.createFakeJwt(user.email));
+        this.storeUser(fakeUser);
+        this.userSubject.next(fakeUser);
+        return { isSuccess: true, errors: [] };
+      }),
+      catchError((): Observable<{ isSuccess: boolean; errors: string[] }> => {
+        return of({ isSuccess: false, errors: ['Unable to load fake users data'] });
+      })
+    );
+  }
+
   login(email: string, password: string): Observable<{ isSuccess: boolean; errors: string[] }> {
+    if (environment.useFakeAuth) {
+      return this.fakeLogin(email, password);
+    }
+
     return this.httpClient.post<JwtAuthResponse>(`${environment.apiUrl}/auth/login`, {
       email,
       password
@@ -56,6 +110,20 @@ export class JwtAuthService {
   }
 
   register(username: string, email: string, password: string): Observable<{ isSuccess: boolean; errors: string[] }> {
+    if (environment.useFakeAuth) {
+      return this.fakeLogin(email, password).pipe(
+        switchMap((result) => {
+          if (result.isSuccess) {
+            return of(result);
+          }
+          return of({
+            isSuccess: false,
+            errors: ['Fake mode is read-only. Use existing demo user.'],
+          });
+        })
+      );
+    }
+
     return this.httpClient.post<JwtAuthResponse>(`${environment.apiUrl}/auth/register`, {
       username,
       email,

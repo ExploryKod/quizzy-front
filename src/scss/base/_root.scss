@@ -1,0 +1,51 @@
+// -----------------------------------------------------------------------------
+// This file contains all application-wide Sass root properties.
+// -----------------------------------------------------------------------------
+@use '../abstracts/variables' as *;
+@use '../abstracts/functions' as *;
+
+:root {
+  @each $state-color, $value in $state-colors {
+    --color-#{$state-color}: #{$value};
+    --color-rgb-#{$state-color}: #{hexToRGBString($value)};
+  }
+
+  @each $bp, $value in $grid-breakpoints {
+    --breakpoint-#{$bp}: #{$value};
+  }
+
+  @each $color-name, $value in $quiz-colors {
+    --#{$color-name}: #{$value};
+  }
+
+  @each $color-name, $value in $quiz-element-colors {
+    --element-#{$color-name}: #{$value};
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    --nomotion: none;
+  }
+
+  /* New set of spacing */
+  --spacing-100: 8px;
+  --spacing-200: 16px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-500: 40px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1600: 128px;
+  --spacing-1800: 144px;
+  --spacing-2300: 184px;
+
+  /* Font tokens mirrored from SCSS variables for easier browser inspection */
+  --font-family: #{$font-family};
+  --font-family-title: #{$font-family-title};
+  --font-family-text: #{$font-family-text};
+
+  --container-maxw: 1200px;
+  
+  --border-radius-header: 3rem;
+
+  --scrollbarsize: 17px;
+}

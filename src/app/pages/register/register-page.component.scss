@@ -6,7 +6,7 @@
   align-items: center;
 
   h1 {
-    color: var(--color-text);
+    color: var(--element-text-dark);
     text-align: center;
     margin-bottom: 2rem;
   }
@@ -18,16 +18,16 @@
     font-size: 1.3rem;
     line-height: 1.4;
     text-align: left;
-    color: var(--color-error);
-    border: 1px solid var(--color-error);
+    color: var(--element-error);
+    border: 1px solid var(--element-error);
     border-radius: 0.4rem;
-    background-color: var(--color-error-background);
+    background-color: var(--element-error-background);
   }
 
   background-color: var(--color-account-background);
   padding: 3rem 6rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--color-primary);
+  border: 1px solid var(--element-primary);
 
   .form-field {
     text-align: center;
@@ -42,7 +42,7 @@
   text-align: center;
   padding: 1rem;
   font-size: 1.2rem;
-  color: var(--color-text);
+  color: var(--element-text-dark);
 
   a:hover, a:visited {
     color: currentColor;

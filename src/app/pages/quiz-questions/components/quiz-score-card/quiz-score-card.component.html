@@ -1,0 +1,16 @@
+<div class="quiz-score-card">
+  <div class="quiz-score-card__header">
+    @if (quizIcon) {
+      <img class="quiz-score-card__header-icon" [src]="quizIcon" [alt]="quizTitle" />
+    }
+    <span class="quiz-score-card__header-title">{{ quizTitle }}</span>
+  </div>
+  <div class="quiz-score-card__score-container">
+    <div class="quiz-score-card__score-value">
+      <span class="quiz-score-card__value-number">{{ correctAnswers }}</span>
+    </div>
+    <div class="quiz-score-card__total">
+      Out of <span>{{ totalQuestions }}</span>
+    </div>
+  </div>
+</div>
