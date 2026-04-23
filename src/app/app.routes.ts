@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 import { WelcomePageComponent } from './pages/welcome/welcome-page.component';
 import { MyQuizzesComponent } from './pages/my-quizzes/my-quizzes.component';
+import { QuizQuestionsComponent } from './pages/quiz-questions/quiz-questions.component';
 
 
 export const appRoutes: Route[] = [
@@ -31,6 +32,10 @@ export const appRoutes: Route[] = [
   {
     path: 'my-quizzes',
     component: MyQuizzesComponent
+  },
+  {
+    path: 'quiz-questions/:id',
+    component: QuizQuestionsComponent
   },
   {
     path: '**',

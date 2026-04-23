@@ -1,0 +1,40 @@
+{
+  "_id": "1dead52f-3f7d-42e8-a074-a44b8cba732d",
+  "title": "New Quiz",
+  "description": "",
+  "userId": "ae122cea-ee57-4c84-a7df-a0bb2ada8a6f",
+  "questions": [
+    {
+      "id": "5da88caa-8799-4213-b08b-43853e78735d",
+      "title": "New Question",
+      "answers": [
+        {
+          "title": "Answer1",
+          "isCorrect": false
+        },
+        {
+          "title": "Answer2",
+          "isCorrect": false
+        }
+      ],
+      "_id": "69e940b3e695123dbfacf852"
+    },
+    {
+      "id": "c9005c43-5074-4d50-80f1-2e2d54e6b6d2",
+      "title": "New Question 2",
+      "answers": [
+        {
+          "title": "Answer1",
+          "isCorrect": false
+        },
+        {
+          "title": "Answer2",
+          "isCorrect": false
+        }
+      ],
+      "_id": "69e940bfe695123dbfacf85c"
+    }
+  ],
+  "executionId": "ABCDEF",
+  "__v": 2
+}

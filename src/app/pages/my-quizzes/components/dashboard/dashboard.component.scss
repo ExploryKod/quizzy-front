@@ -21,14 +21,14 @@
   &__quizzes {
     margin-bottom: 2rem;
     width: 100%;
-    border: 1px solid var(--color-primary);
+    border: 1px solid var(--element-primary);
     border-radius: .5rem;
     padding: 2rem 4rem;
   }
 
   &__error {
-    color: var(--color-error);
-    background: var(--color-error-background);
+    color: var(--element-error);
+    background: var(--element-error-background);
     padding: 2rem 4rem;
     border-radius: 0.5rem;
     border: 1px solid currentColor;

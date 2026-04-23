@@ -1,0 +1,89 @@
+@use 'scss/abstracts/responsive' as bp;
+@use 'scss/base/typography' as typo;
+@use 'scss/base/buttons' as btn;
+
+.quiz-questions {
+  max-width: 1160px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 5rem;
+  font-size: 1.6rem;
+
+  &__intro {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+
+    @include bp.media-breakpoint-up(lg) {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 5rem;
+    }
+  }
+
+  &__text-wrapper {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    @include bp.media-breakpoint-up(lg) {
+      max-width: 45ch;
+    }
+  }
+
+  &__number {
+    @extend .quiz-text-md;
+    font-style: italic;
+    margin: 0;
+  }
+
+  &__title {
+    color: var(--element-text-dark);
+    font-size: clamp(3.2rem, 2.2vw, 4.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+
+    &--completed {
+      @extend .quiz-text-xl;
+      font-size: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: baseline;
+    }
+  }
+
+  &__title-part {
+    font-weight: 400;
+
+    &--strong {
+      font-weight: 700;
+    }
+  }
+
+  &__options-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  &__submit-button {
+     @extend .simple-button;
+     margin-top: 0.8rem;
+     min-height: 5.6rem;
+  }
+
+  &__empty-state {
+    @extend .quiz-text-md;
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+:host-context(.quiz-theme-dark) .quiz-questions {
+  color: #f2f4ff;
+}

@@ -5,10 +5,10 @@ export const fr = {
   },
   header : {
     statusTooltip: {
-      ko: 'Le serveur est injoignable',
-      partial: 'Le serveur répond, mais pas la base de données',
-      ok: 'Le serveur est en ligne !',
-      pending: 'Vérification du statut serveur...'
+      ko: 'Accés : Quiz de démos uniquement',
+      partial: 'Accés : Quiz de démos uniquement',
+      ok: 'Accés aux quiz disponibles',
+      pending: 'Accés serveur en cours...'
     },
     userMissing: 'Utilisateur inconnu (issue #4)',
     userMenu: 'Menu du compte'
@@ -116,6 +116,21 @@ export const fr = {
   myQuizzes: {
     title: 'Mes questionnaires',
   },
+  quizQuestions: {
+    number: 'Question',
+    total: 'sur',
+    title: 'Questionnaire',
+    completedTitle: 'Quiz termine.',
+    youScored: 'Votre score...',
+    submit: 'Valider la reponse',
+    nextQuestion: 'Question suivante',
+    getScore: 'Voir le score',
+    scoreTitle: 'Votre score',
+    playAgain: 'Rejouer',
+    noAnswers: 'Aucune reponse disponible',
+    notReadyYet:
+      'Le quiz n’est pas pret : il doit contenir au moins 2 questions et chaque question doit avoir au moins 2 reponses.',
+  },
   quizEditPage: {
     notFound: 'Quiz non trouvé',
     error: 'Erreur lors du chargement du quiz',
@@ -174,5 +189,8 @@ export const fr = {
      */
     sessionUnavailable:
       'Impossible de rejoindre cette session : le code est incorrect ou le quiz n’a pas été démarré par l’animateur (page hôte non ouverte).',
+    waitForHost: 'Attendez l’animateur pour la question suivante.',
+    questionProgress: 'Question {{current}} / {{total}}',
+    sessionScore: 'Ton score sur cette session : {{correct}} / {{total}}',
   },
 }

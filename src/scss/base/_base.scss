@@ -23,21 +23,21 @@ body {
 }
 
 /* Page-scoped background (body class is set at runtime in AppComponent). */
-body.page-home {
+body.page-home, body.page-join, body.page-my-quizzes {
   background-image: url('/assets/patterns/pattern-background-mobile-light.svg');
   background-repeat: no-repeat;
   background-position: center top;
 }
 
 @include bp.media-breakpoint-up(md) {
-  body.page-home {
+  body.page-home, body.page-join, body.page-my-quizzes {
     background-image: url('/assets/patterns/pattern-background-tablet-light.svg');
     background-position: center center;
   }
 }
 
 @include bp.media-breakpoint-up(lg) {
-  body.page-home {
+  body.page-home, body.page-join, body.page-my-quizzes {
     background-image: url('/assets/patterns/pattern-background-desktop-light.svg');
   }
 }
@@ -106,10 +106,10 @@ label {
   padding: 2rem 4rem;
   margin: 2rem 4rem;
   text-align: center;
-  color: var(--color-error);
+  color: var(--element-error);
   border: 1px solid currentColor;
   border-radius: .5rem;
-  background-color: var(--color-error-background);
+  background-color: var(--element-error-background);
 }
 
 .info {
@@ -117,13 +117,13 @@ label {
   padding: 2rem 4rem;
   margin: 2rem 4rem;
   text-align: center;
-  color: var(--color-primary);
+  color: var(--element-primary);
   border: 1px solid currentColor;
   border-radius: .5rem;
-  background-color: var(--color-primary-background);
+  background-color: var(--element-primary-background);
 }
 
 .form-error {
-  color: var(--color-error);
+  color: var(--element-error);
   font-size: 1.2rem;
 }

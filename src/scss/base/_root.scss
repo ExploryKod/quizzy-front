@@ -19,7 +19,7 @@
   }
 
   @each $color-name, $value in $quiz-element-colors {
-    --color-#{$color-name}: #{$value};
+    --element-#{$color-name}: #{$value};
   }
 
   @media (prefers-reduced-motion: reduce) {

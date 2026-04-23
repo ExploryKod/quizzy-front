@@ -68,6 +68,8 @@ $quiz-colors: (
   'green-500': #2fd887,
   'purple-100': #f6e7ff,
   'purple-600': #a729f5,
+  'purple-700': #7d3780,
+  'purple-secondary': #ae61de,
   'orange-50': #fff5ed,
   'orange-400': #ff7e35,
   'red-500': #ee5454
@@ -75,15 +77,19 @@ $quiz-colors: (
 
 // Semantic/UI element colors exported as --color-* custom properties in :root
 $quiz-element-colors: (
+  'quiz-box-shadow': rgba(0, 0, 0, 0.15) 0px 2px 8px,
   'button-quiz': var(--white),
   'text-dark': var(--blue-900),
+  'button-submit-color': var(--purple-600),
+  'button-submit-text-color': var(--white),
+  'header-background-color': var(--blue-950),
   'primary': #7d3780,
   'paper-lighter': #f7f4e3,
   'paper': #f2eecb,
   'paper-darker': #e6e1b3,
   'paper-complementary': #cbcff2,
   'paper-complementary-darker': #b3b3e6,
-  'text-secondary': #fefefe,
+  'text-secondary': var(--white),
   'error': #9a1d1d,
   'error-background': #ffb2b2,
   'success-background': #63a163,
@@ -128,17 +134,18 @@ $container-max-widths: (
 
 /**** font-weights ****/
 $fw-light: 300;
+$fw-medium: 500; // Rubik "Medium" in Figma (not the same as $fw-semibold)
 $fw-normal: normal;
 $fw-bold: bold;
 $fw-semibold: 600;
 
 /**** text size ****/
 
-// titles size if used outside typography functions
-$title-size-xl: 110px;
-$title--size-lg: 54px;
-$title--size-md: 30px;
-$title-size-sm: 22px;
+// titles size if used outside typography functions (desktop max; matches Figma / $text-sizes-xl-array)
+$title-size-xl: 144px;
+$title--size-lg: 64px;
+$title--size-md: 36px;
+$title-size-sm: 28px;
 
 // paragraph, links, texts sizes if used outside typography functions
 $text-size-xl: 20px;
@@ -150,32 +157,35 @@ $text-size-xs: 13px;
 $text-size-xxs: 10px;
 
 // Arrays used in clamp typography functions (clamp(text-size-mobile, viewport-w, text-sizes-xl))
+// Pairs aligned with Figma presets (mobile / desktop @ 1920 clamp max). See .quiz-title-* / .quiz-text-* in _typography.scss.
+// Index N matches .size-N utilities and @include font-text(N, …) level.
+// 1 Preset 1 | 2 Preset 2 | 3 Preset 3 | 4 Preset 4 | 5 Preset 4 (title-sm) | 6 title-xs | 7 text-xl | 8 utility | 9 quiz-text-md | 10 quiz-text-sm | 11 quiz-text-xs | 12 quiz-text-xxs
 $text-sizes-mobile-array: (
-  1: 36,
-  2: 28,
-  3: 25,
-  4: 22,
-  5: 20,
-  6: 18,
-  7: 17,
+  1: 88,
+  2: 40,
+  3: 30,
+  4: 18,
+  5: 18,
+  6: 14,
+  7: 20,
   8: 16,
-  9: 16,
-  10: 15,
-  11: 13,
+  9: 14,
+  10: 13,
+  11: 12,
   12: 10
 );
 
 $text-sizes-xl-array: (
-  1: 110,
-  2: 54,
-  3: 30,
-  4: 24,
-  5: 22,
+  1: 144,
+  2: 64,
+  3: 36,
+  4: 28,
+  5: 28,
   6: 20,
-  7: 18,
+  7: 36,
   8: 17,
-  9: 16,
-  10: 15,
+  9: 24,
+  10: 16,
   11: 13,
   12: 10
 );

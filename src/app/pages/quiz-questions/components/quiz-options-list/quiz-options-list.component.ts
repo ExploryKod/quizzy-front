@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonOptionComponent,
@@ -19,22 +27,37 @@ export interface QuizAnswerOption {
   templateUrl: './quiz-options-list.component.html',
   styleUrl: './quiz-options-list.component.scss',
 })
-export class QuizOptionsListComponent {
+export class QuizOptionsListComponent implements OnChanges {
   private readonly quizService = inject(QuizService);
 
   @Input({ required: true }) quizId = '';
   @Input({ required: true }) questionId = '';
   @Input() answers: QuizAnswerOption[] = [];
+  @Input() isLastQuestion = false;
   @Input() nextQuestionLabel = 'quizQuestions.nextQuestion';
+  @Input() getScoreLabel = 'quizQuestions.getScore';
   @Input() submitAnswerLabel = 'quizQuestions.submit';
+  /** When true, do not call API — use `isCorrect` on the answer list (e.g. join session). */
+  @Input() useLocalScoring = false;
+  /** Join flow: after submit, only "wait for host" (no next / get score in this control). */
+  @Input() joinMode = false;
+  /** Full localStorage key for score (e.g. `join-quiz-score:AKQQQG`). If unset, uses `quiz-score:${quizId}`. */
+  @Input() scoreStorageKeyOverride: string | null = null;
   @Output() answerClick = new EventEmitter<QuizAnswerOption>();
   @Output() nextQuestion = new EventEmitter<void>();
+  @Output() getScore = new EventEmitter<void>();
 
   selectedAnswerTitle: string | null = null;
   submittedAnswerTitle: string | null = null;
   isSubmitted = false;
   isAnswerCorrect = false;
   isSubmitting = false;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['questionId'] && !changes['questionId'].firstChange) {
+      this.resetQuestionState();
+    }
+  }
 
   onAnswerClick(answer: QuizAnswerOption) {
     if (this.isSubmitted) {
@@ -46,10 +69,28 @@ export class QuizOptionsListComponent {
 
   onSubmitOrNext() {
     if (this.isSubmitted) {
+      if (this.joinMode) {
+        return;
+      }
+      if (this.isLastQuestion) {
+        this.getScore.emit();
+        return;
+      }
       this.nextQuestion.emit();
       return;
     }
     if (!this.selectedAnswerTitle || this.isSubmitting) {
+      return;
+    }
+
+    if (this.useLocalScoring) {
+      const selected = this.answers.find(
+        (a) => a.title === this.selectedAnswerTitle
+      );
+      this.isSubmitted = true;
+      this.submittedAnswerTitle = this.selectedAnswerTitle;
+      this.isAnswerCorrect = !!selected?.isCorrect;
+      this.persistScoreIfCorrect();
       return;
     }
 
@@ -95,14 +136,26 @@ export class QuizOptionsListComponent {
     return this.isSubmitted && this.isSelected(answer) && !this.isAnswerCorrect;
   }
 
+  private getScoreStorageKey(): string {
+    return this.scoreStorageKeyOverride ?? `quiz-score:${this.quizId}`;
+  }
+
   private persistScoreIfCorrect() {
     if (!this.isAnswerCorrect) {
       return;
     }
-    const storageKey = `quiz-score:${this.quizId}`;
+    const storageKey = this.getScoreStorageKey();
     const raw = localStorage.getItem(storageKey);
     const parsed: Record<string, boolean> = raw ? JSON.parse(raw) : {};
     parsed[this.questionId] = true;
     localStorage.setItem(storageKey, JSON.stringify(parsed));
+  }
+
+  private resetQuestionState() {
+    this.selectedAnswerTitle = null;
+    this.submittedAnswerTitle = null;
+    this.isSubmitted = false;
+    this.isAnswerCorrect = false;
+    this.isSubmitting = false;
   }
 }
