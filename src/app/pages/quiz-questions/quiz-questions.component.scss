@@ -38,9 +38,10 @@
   }
 
   &__title {
-    /* quiz-title-md — Figma Preset 3 · font-text level 3 · LH 120% */
-    @extend .quiz-title-md;
+    color: var(--element-text-dark);
+    font-size: clamp(3.2rem, 2.2vw, 4.4rem);
     font-weight: 700;
+    line-height: 1.2;
     margin-bottom: 0.5rem;
 
     &--completed {
@@ -81,4 +82,8 @@
     font-style: italic;
     margin: 0;
   }
+}
+
+:host-context(.quiz-theme-dark) .quiz-questions {
+  color: #f2f4ff;
 }

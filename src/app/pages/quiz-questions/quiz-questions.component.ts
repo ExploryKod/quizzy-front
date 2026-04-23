@@ -10,6 +10,7 @@ import {
   QuizOptionsListComponent,
 } from './components/quiz-options-list/quiz-options-list.component';
 import { QuizScoreCardComponent } from './components/quiz-score-card/quiz-score-card.component';
+import { QuizQuestionsBannerComponent } from './components/quiz-questions-banner/quiz-questions-banner';
 
 @Component({
   selector: 'qzy-quiz-questions-page',
@@ -17,6 +18,7 @@ import { QuizScoreCardComponent } from './components/quiz-score-card/quiz-score-
   imports: [
     CommonModule,
     TranslateModule,
+    QuizQuestionsBannerComponent,
     QuizOptionsListComponent,
     QuizScoreCardComponent,
   ],
@@ -32,10 +34,14 @@ export class QuizQuestionsComponent implements OnInit {
   currentQuestionIndex = 0;
   showScoreCard = false;
   finalScore = { correct: 0, total: 0 };
+  isDarkMode = false;
   loadErrorKey: 'quizQuestions.notReadyYet' | 'quizQuestions.noAnswers' | null =
     null;
 
   ngOnInit(): void {
+    this.isDarkMode = localStorage.getItem('quiz-theme') === 'dark';
+    this.applyThemeMode(this.isDarkMode);
+
     const routeQuizId = this.route.snapshot.paramMap.get('id');
     if (routeQuizId) {
       this.loadQuizById(routeQuizId);
@@ -104,6 +110,12 @@ export class QuizQuestionsComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  onThemeModeChange(isDarkMode: boolean) {
+    this.isDarkMode = isDarkMode;
+    localStorage.setItem('quiz-theme', isDarkMode ? 'dark' : 'light');
+    this.applyThemeMode(isDarkMode);
+  }
+
   private loadQuizById(quizId: string) {
     this.quizService.get(quizId).subscribe((response) => {
       if (response.status !== 'OK' || !response.data) {
@@ -130,5 +142,9 @@ export class QuizQuestionsComponent implements OnInit {
     return quiz.questions.every(
       (question) => Array.isArray(question.answers) && question.answers.length >= 2
     );
+  }
+
+  private applyThemeMode(isDarkMode: boolean): void {
+    document.body.classList.toggle('quiz-theme-dark', isDarkMode);
   }
 }

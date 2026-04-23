@@ -5,9 +5,9 @@ export const en = {
   },
   header: {
     statusTooltip: {
-      ko: 'Server Access KO: only demo quizzes',
-      partial: 'Database Access KO: only demo quizzes',
-      ok: 'Server access OK',
+      ko: 'Access : Demo quizzes only',
+      partial: 'Access : Demo quizzes only',
+      ok: 'Access to quizzes available',
       pending: 'Server access checking...',
     },
     userMissing: 'Unknown user (issue #4)',

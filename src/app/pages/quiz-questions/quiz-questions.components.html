@@ -1,4 +1,10 @@
 <div class="quiz-questions page">
+  <qzy-quiz-questions-banner
+    [quizTitle]="quiz?.title || ''"
+    [quizIcon]="quiz?.icon || 'assets/icons/icon-html.svg'"
+    [isDarkMode]="isDarkMode"
+    (themeModeChange)="onThemeModeChange($event)"
+  ></qzy-quiz-questions-banner>
   <div class="quiz-questions__intro">
     <div class="quiz-questions__text-wrapper">
       @if (showScoreCard) {
@@ -27,7 +33,7 @@
       @if (showScoreCard) {
         <qzy-quiz-score-card
           [quizTitle]="quiz?.title || ''"
-          [quizIcon]="quiz?.icon || ''"
+          [quizIcon]="quiz?.icon || 'assets/icons/icon-html.svg'"
           [correctAnswers]="finalScore.correct"
           [totalQuestions]="finalScore.total"
         ></qzy-quiz-score-card>

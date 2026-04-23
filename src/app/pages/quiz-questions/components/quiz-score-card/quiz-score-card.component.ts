@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class QuizScoreCardComponent {
   @Input() quizTitle = '';
-  @Input() quizIcon = '';
+  @Input() quizIcon = 'assets/icons/icon-html.svg';
   @Input() correctAnswers = 0;
   @Input() totalQuestions = 0;
 }
