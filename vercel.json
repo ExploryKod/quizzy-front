@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "framework": null,
+    "buildCommand": "pnpm run build",
+    "outputDirectory": "dist/quizzy-front/browser",
+    "installCommand": "pnpm install --frozen-lockfile",
+    "rewrites": [
+      {
+        "source": "/(.*)",
+        "destination": "/index.html"
+      }
+    ]
+  }

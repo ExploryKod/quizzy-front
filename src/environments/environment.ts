@@ -1,8 +1,10 @@
 export const environment = {
-  baseUrl: '<SET ME UP>',
-  apiUrl: '<SET ME UP>',
-  fakeApiUrl: '<SET ME UP>',
-  useFakeApi: false,
+  baseUrl: '/',
+  apiUrl: '/api',
+  fakeApiUrl: 'assets/data/quizzes.json',
+  fakeUsersUrl: 'assets/data/user.json',
+  useFakeApi: true,
+  useFakeAuth: true,
   authType: 'JWT', // 'JWT' or 'FIREBASE' - default to JWT
   // You will need to create a Firebase project and replace the configuration here with yours
   firebase : {

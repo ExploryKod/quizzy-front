@@ -37,6 +37,8 @@ export interface GetAllPublicQuizApiResponse {
   data: Array<Pick<Quiz, 'id' | 'title'> & { description?: string }>;
 }
 
+type FakeQuizRecord = Quiz & { _id?: string };
+type FakeQuizResponseShape = GetAllQuizApiResponse | FakeQuizRecord | FakeQuizRecord[];
 
 @Injectable({
   providedIn: 'root'
@@ -47,9 +49,38 @@ export class QuizService {
   private readonly hateoasService = inject(HateoasService);
   private readonly authService = inject(AuthService);
 
+  private normalizeFakeResponse(response: FakeQuizResponseShape): GetAllQuizApiResponse {
+    if (Array.isArray(response)) {
+      return { data: response.map((quiz) => this.normalizeQuiz(quiz)), _links: { create: '' } };
+    }
+
+    if ('data' in response && Array.isArray(response.data)) {
+      return {
+        data: response.data.map((quiz) => this.normalizeQuiz(quiz)),
+        _links: response._links ?? { create: '' },
+      };
+    }
+
+    return { data: [this.normalizeQuiz(response as FakeQuizRecord)], _links: { create: '' } };
+  }
+
+  private normalizeQuiz(quiz: FakeQuizRecord): Quiz {
+    const fallbackId = quiz._id;
+    return {
+      ...quiz,
+      id: quiz.id ?? fallbackId ?? '',
+      questions: (quiz.questions ?? []).map((question) => ({
+        ...question,
+        id: question.id ?? (question as { _id?: string })._id ?? '',
+        answers: question.answers ?? [],
+      })),
+    };
+  }
+
   getAll(): Observable<QuizListResponse> {
     if (environment.useFakeApi) {
-      return this.httpClient.get<GetAllQuizApiResponse>(environment.fakeApiUrl).pipe(
+      return this.httpClient.get<FakeQuizResponseShape>(environment.fakeApiUrl).pipe(
+        map((response) => this.normalizeFakeResponse(response)),
         tap(response => {
           if (response._links?.create) {
             this.hateoasService.addUrl(HateoasUrl.CreateQuiz, response._links.create);
@@ -128,7 +159,8 @@ export class QuizService {
 
   get(id: string): Observable<QuizResponse> {
     if (environment.useFakeApi) {
-      return this.httpClient.get<GetAllQuizApiResponse>(environment.fakeApiUrl).pipe(
+      return this.httpClient.get<FakeQuizResponseShape>(environment.fakeApiUrl).pipe(
+        map((response) => this.normalizeFakeResponse(response)),
         map((response): QuizResponse => {
           const quiz = response.data.find((item) => item.id === id);
           if (!quiz) {
@@ -166,7 +198,8 @@ export class QuizService {
     answerTitle: string
   ): Observable<SubmitAnswerResponse> {
     if (environment.useFakeApi) {
-      return this.httpClient.get<GetAllQuizApiResponse>(environment.fakeApiUrl).pipe(
+      return this.httpClient.get<FakeQuizResponseShape>(environment.fakeApiUrl).pipe(
+        map((response) => this.normalizeFakeResponse(response)),
         map((response) => {
           const quiz = response.data.find((item) => item.id === quizId);
           const question = quiz?.questions.find((item) => item.id === questionId);
@@ -190,7 +223,8 @@ export class QuizService {
 
   getQuestions(quizId: string): Observable<QuizQuestion[]> {
     if (environment.useFakeApi) {
-      return this.httpClient.get<GetAllQuizApiResponse>(environment.fakeApiUrl).pipe(
+      return this.httpClient.get<FakeQuizResponseShape>(environment.fakeApiUrl).pipe(
+        map((response) => this.normalizeFakeResponse(response)),
         map((response) => {
           const quiz = response.data.find((item) => item.id === quizId);
           return quiz?.questions ?? [];

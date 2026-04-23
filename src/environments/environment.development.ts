@@ -1,7 +1,8 @@
 export const environment = {
   baseUrl: 'http://localhost:3002',
   apiUrl: 'http://localhost:3002/api',
-  fakeApiUrl: 'assets/data/data.json',
+  fakeApiUrl: 'assets/data/quizzes.json',
+  fakeUsersUrl: 'assets/data/user.json',
   useFakeApi: false,
   useFakeAuth: true,
   authType: 'JWT', // 'JWT' or 'FIREBASE' - default to JWT
