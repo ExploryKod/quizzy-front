@@ -1,6 +1,6 @@
 export const environment = {
-  baseUrl: 'http://194.164.76.63:3002',
-  apiUrl: 'http://194.164.76.63:3002/api',
+  baseUrl: '/',
+  apiUrl: '/api',
   fakeApiUrl: 'assets/data/quizzes.json',
   fakeUsersUrl: 'assets/data/user.json',
   useFakeApi: false,

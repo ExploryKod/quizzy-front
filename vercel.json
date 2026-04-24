@@ -5,6 +5,10 @@
     "outputDirectory": "dist/quizzy-front/browser",
     "installCommand": "pnpm install --frozen-lockfile",
     "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "http://194.164.76.63:3002/api/$1"
+    },
       {
         "source": "/(.*)",
         "destination": "/index.html"
