@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Quiz } from '../model/quiz';
@@ -77,6 +77,61 @@ export class QuizService {
     };
   }
 
+  private mapPublicQuiz(quiz: Pick<Quiz, 'id' | 'title'> & { description?: string }): Quiz {
+    return {
+      id: quiz.id,
+      title: quiz.title,
+      description: quiz.description ?? '',
+      questions: [],
+      isPrivate: false,
+    };
+  }
+
+  getPublicQuizzes(): Observable<Quiz[]> {
+    if (environment.useFakeApi) {
+      return this.httpClient.get<FakeQuizResponseShape>(environment.fakeApiUrl).pipe(
+        map((response) => this.normalizeFakeResponse(response).data.map((quiz) => ({ ...quiz, isPrivate: false }))),
+        catchError((): Observable<Quiz[]> => of([]))
+      );
+    }
+
+    return this.httpClient
+      .get<GetAllPublicQuizApiResponse>(`${environment.apiUrl}/public/quizzes`)
+      .pipe(
+        map((response) => (response.data ?? []).map((quiz) => this.mapPublicQuiz(quiz))),
+        catchError((): Observable<Quiz[]> => of([]))
+      );
+  }
+
+  getWelcomeQuizzes(): Observable<Quiz[]> {
+    return this.authService.getToken().pipe(
+      take(1),
+      switchMap((token) => {
+        if (!token) {
+          return this.getPublicQuizzes();
+        }
+
+        return forkJoin({
+          publicQuizzes: this.getPublicQuizzes(),
+          privateQuizzes: this.getAll().pipe(
+            map((response) =>
+              response.status === 'OK'
+                ? response.data.map((quiz) => ({ ...quiz, isPrivate: true }))
+                : []
+            ),
+            catchError((): Observable<Quiz[]> => of([]))
+          ),
+        }).pipe(
+          map(({ publicQuizzes, privateQuizzes }) => {
+            const publicIds = new Set(publicQuizzes.map((quiz) => quiz.id));
+            const uniquePrivateQuizzes = privateQuizzes.filter((quiz) => !publicIds.has(quiz.id));
+            return [...publicQuizzes, ...uniquePrivateQuizzes];
+          })
+        );
+      })
+    );
+  }
+
   getAll(): Observable<QuizListResponse> {
     if (environment.useFakeApi) {
       return this.httpClient.get<FakeQuizResponseShape>(environment.fakeApiUrl).pipe(
@@ -118,23 +173,16 @@ export class QuizService {
           );
         }
 
-        return this.httpClient
-          .get<GetAllPublicQuizApiResponse>(`${environment.apiUrl}/public/quizzes`)
-          .pipe(
-            map((response): QuizListResponse => ({
-              status: 'OK',
-              data: (response.data ?? []).map((quiz) => ({
-                id: quiz.id,
-                title: quiz.title,
-                description: quiz.description ?? '',
-                questions: [],
-              })),
-              isCreateQuizLinkAvailable: false,
-            })),
-            catchError((): Observable<QuizListResponse> =>
-              of({ status: 'ERROR', data: [], isCreateQuizLinkAvailable: false })
-            )
-          );
+        return this.getPublicQuizzes().pipe(
+          map((quizzes): QuizListResponse => ({
+            status: 'OK',
+            data: quizzes,
+            isCreateQuizLinkAvailable: false,
+          })),
+          catchError((): Observable<QuizListResponse> =>
+            of({ status: 'ERROR', data: [], isCreateQuizLinkAvailable: false })
+          )
+        );
       })
     );
   }

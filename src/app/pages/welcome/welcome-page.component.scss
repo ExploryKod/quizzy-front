@@ -47,4 +47,16 @@
     justify-content: center;
     gap: 1rem;
   }
+
+  &__empty-state {
+    @extend .quiz-text-md;
+    font-style: italic;
+    margin: 0;
+  }
+
+  &__submit-button {
+    @extend .simple-button;
+    margin-top: 0.8rem;
+    min-height: 5.6rem;
+  }
 }

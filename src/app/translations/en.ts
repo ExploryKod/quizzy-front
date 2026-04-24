@@ -90,6 +90,8 @@ export const en = {
     pretitle: 'Welcome to',
     title: 'Quiz of the day!',
     description: 'Challenge your friends in general knowledge quizzes!',
+    noQuizAvailable: 'No quiz available for now.',
+    goToMyQuizzes: 'Go to your quizzes',
     join: {
       title: 'Join a quiz!',
       label: 'Enter quiz code',

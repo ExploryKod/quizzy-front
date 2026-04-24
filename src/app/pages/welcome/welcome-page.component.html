@@ -11,9 +11,17 @@
     </div>
     <div class="welcome-page__quizzes-wrapper">
       @if (quizzes$ | async; as quizzes) {
-        @if (quizzes.status === 'OK') {
-          <qzy-quiz-button-list [quizzes]="quizzes.data" (quizClick)="onQuizButtonClick($event)"></qzy-quiz-button-list>
+        @if (quizzes.length > 0) {
+          <qzy-quiz-button-list [quizzes]="quizzes" (quizClick)="onQuizButtonClick($event)"></qzy-quiz-button-list>
+        } @else {
+          <p class="welcome-page__empty-state">{{ 'welcomePage.noQuizAvailable' | translate }}</p>
         }
+      }
+
+      @if (isLogged$ | async) {
+        <button type="button" class="welcome-page__submit-button" routerLink="/my-quizzes">
+          {{ 'welcomePage.goToMyQuizzes' | translate }}
+        </button>
       }
     </div>
   </div>

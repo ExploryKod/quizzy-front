@@ -90,6 +90,8 @@ export const fr = {
     pretitle: 'Bienvenue sur le',
     title: 'Quiz du jour !',
     description: 'Affrontez vos amis dans des quiz de culture générale !',
+    noQuizAvailable: 'Aucun quiz disponible pour le moment.',
+    goToMyQuizzes: 'Aller à vos quiz',
     join : {
       title : 'Rejoignez un questionnaire !',
       label: 'Entrez le code du questionnaire',
