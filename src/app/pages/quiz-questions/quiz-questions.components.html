@@ -1,10 +1,4 @@
 <div class="quiz-questions page">
-  <qzy-quiz-questions-banner
-    [quizTitle]="quiz?.title || ''"
-    [quizIcon]="quiz?.icon || 'assets/icons/icon-html.svg'"
-    [isDarkMode]="isDarkMode"
-    (themeModeChange)="onThemeModeChange($event)"
-  ></qzy-quiz-questions-banner>
   <div class="quiz-questions__intro">
     <div class="quiz-questions__text-wrapper">
       @if (showScoreCard) {
@@ -49,7 +43,6 @@
           [quizId]="quiz.id"
           [questionId]="currentQuestion.id"
           [answers]="currentAnswers"
-          [useLocalScoring]="true"
           [isLastQuestion]="isLastQuestion"
           (answerClick)="onAnswerClick($event)"
           (nextQuestion)="onNextQuestion()"

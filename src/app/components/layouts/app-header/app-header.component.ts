@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'qzy-quiz-questions-banner',
+  selector: 'qzy-app-header',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './quiz-questions-banner.html',
-  styleUrl: './quiz-questions-banner.scss',
+  templateUrl: './app-header.component.html',
+  styleUrl: './app-header.component.scss',
 })
-export class QuizQuestionsBannerComponent {
+export class AppHeaderComponent {
+  @Input() showQuizMeta = true;
   @Input() quizTitle = '';
   @Input() quizIcon = 'assets/icons/icon-html.svg';
   @Input() isDarkMode = false;

@@ -1,4 +1,10 @@
-<qzy-header></qzy-header>
+<qzy-app-header
+  [showQuizMeta]="showQuizMeta"
+  [quizTitle]="bannerTitle"
+  [quizIcon]="bannerIcon"
+  [isDarkMode]="isDarkMode"
+  (themeModeChange)="onThemeModeChange($event)"
+></qzy-app-header>
 <main>
   <router-outlet></router-outlet>
 </main>

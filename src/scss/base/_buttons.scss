@@ -20,7 +20,8 @@
     }
 
     &:disabled {
-      opacity: 0.5;
+      background-color: color-mix(in srgb, var(--element-button-submit-color) 50%, #fff 50%);
+      color: var(--element-button-submit-text-color);
       cursor: default;
       transform: none;
     }

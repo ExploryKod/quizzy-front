@@ -5,14 +5,12 @@ import {
   OnChanges,
   Output,
   SimpleChanges,
-  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ButtonOptionComponent,
   ButtonOptionInterface,
 } from '../../../../components/buttons/button-option/button-option.component';
-import { QuizService } from '../../../../services/quiz.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 export interface QuizAnswerOption {
@@ -28,8 +26,6 @@ export interface QuizAnswerOption {
   styleUrl: './quiz-options-list.component.scss',
 })
 export class QuizOptionsListComponent implements OnChanges {
-  private readonly quizService = inject(QuizService);
-
   @Input({ required: true }) quizId = '';
   @Input({ required: true }) questionId = '';
   @Input() answers: QuizAnswerOption[] = [];
@@ -37,8 +33,6 @@ export class QuizOptionsListComponent implements OnChanges {
   @Input() nextQuestionLabel = 'quizQuestions.nextQuestion';
   @Input() getScoreLabel = 'quizQuestions.getScore';
   @Input() submitAnswerLabel = 'quizQuestions.submit';
-  /** When true, do not call API — use `isCorrect` on the answer list (e.g. join session). */
-  @Input() useLocalScoring = false;
   /** Join flow: after submit, only "wait for host" (no next / get score in this control). */
   @Input() joinMode = false;
   /** Full localStorage key for score (e.g. `join-quiz-score:AKQQQG`). If unset, uses `quiz-score:${quizId}`. */
@@ -51,7 +45,6 @@ export class QuizOptionsListComponent implements OnChanges {
   submittedAnswerTitle: string | null = null;
   isSubmitted = false;
   isAnswerCorrect = false;
-  isSubmitting = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['questionId'] && !changes['questionId'].firstChange) {
@@ -79,36 +72,17 @@ export class QuizOptionsListComponent implements OnChanges {
       this.nextQuestion.emit();
       return;
     }
-    if (!this.selectedAnswerTitle || this.isSubmitting) {
+    if (!this.selectedAnswerTitle) {
       return;
     }
 
-    if (this.useLocalScoring) {
-      const selected = this.answers.find(
-        (a) => a.title === this.selectedAnswerTitle
-      );
-      this.isSubmitted = true;
-      this.submittedAnswerTitle = this.selectedAnswerTitle;
-      this.isAnswerCorrect = !!selected?.isCorrect;
-      this.persistScoreIfCorrect();
-      return;
-    }
-
-    this.isSubmitting = true;
-    this.quizService
-      .submitAnswer(this.quizId, this.questionId, this.selectedAnswerTitle)
-      .subscribe({
-        next: (response) => {
-          this.isSubmitted = true;
-          this.submittedAnswerTitle = this.selectedAnswerTitle;
-          this.isAnswerCorrect = response.isCorrect;
-          this.persistScoreIfCorrect();
-          this.isSubmitting = false;
-        },
-        error: () => {
-          this.isSubmitting = false;
-        },
-      });
+    const selected = this.answers.find(
+      (a) => a.title === this.selectedAnswerTitle
+    );
+    this.isSubmitted = true;
+    this.submittedAnswerTitle = this.selectedAnswerTitle;
+    this.isAnswerCorrect = !!selected?.isCorrect;
+    this.persistScoreIfCorrect();
   }
 
   toButtonOption(answer: QuizAnswerOption, index: number): ButtonOptionInterface {
@@ -156,6 +130,5 @@ export class QuizOptionsListComponent implements OnChanges {
     this.submittedAnswerTitle = null;
     this.isSubmitted = false;
     this.isAnswerCorrect = false;
-    this.isSubmitting = false;
   }
 }

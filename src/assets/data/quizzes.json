@@ -12,7 +12,7 @@
             },
             "questions": [
                 {
-                    "title": "What does HTML stand for?",
+                    "title": "What does HTML stand for ?",
                     "answers": [
                         { "title": "Hyper Trainer Marking Language", "isCorrect": false },
                         { "title": "Hyper Text Marketing Language", "isCorrect": false },
@@ -23,7 +23,7 @@
                     "_id": "demo-html-q1"
                 },
                 {
-                    "title": "Which of the following is the correct structure for an HTML document?",
+                    "title": "Which of the following is the correct structure for an HTML document ?",
                     "answers": [
                         { "title": "<html><head></head><body></body></html>", "isCorrect": true },
                         { "title": "<head><html></html><body></body></head>", "isCorrect": false },
@@ -32,6 +32,94 @@
                     ],
                     "id": "demo-html-q2",
                     "_id": "demo-html-q2"
+                },
+                {
+                    "title": "Which HTML element is used to define the title of a document ?",
+                    "answers": [
+                        { "title": "<head>", "isCorrect": false },
+                        { "title": "<title>", "isCorrect": true },
+                        { "title": "<header>", "isCorrect": false },
+                        { "title": "<top>", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q3",
+                    "_id": "demo-html-q3"
+                },
+                {
+                    "title": "What is the purpose of the <body> tag in HTML ?",
+                    "answers": [
+                        { "title": "It defines the document's head section.", "isCorrect": false },
+                        { "title": "It contains all the content such as text, images, and links.", "isCorrect": true },
+                        { "title": "It is used to define the main content of an HTML document.", "isCorrect": false },
+                        { "title": "It specifies the body of the email content in HTML.", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q4",
+                    "_id": "demo-html-q4"
+                },
+                {
+                    "title": "Which HTML tag is used to create a hyperlink ?",
+                    "answers": [
+                        { "title": "<hyperlink>", "isCorrect": false },
+                        { "title": "<link>", "isCorrect": false },
+                        { "title": "<a>", "isCorrect": true },
+                        { "title": "<href>", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q5",
+                    "_id": "demo-html-q5"
+                },
+                {
+                    "title": "Which tag is used to display images in HTML ?",
+                    "answers": [
+                        { "title": "<img>", "isCorrect": true },
+                        { "title": "<image>", "isCorrect": false },
+                        { "title": "<src>", "isCorrect": false },
+                        { "title": "<pic>", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q6",
+                    "_id": "demo-html-q6"
+                },
+                {
+                    "title": "What attribute is used to provide the path of an image in the <img> tag ?",
+                    "answers": [
+                        { "title": "link", "isCorrect": false },
+                        { "title": "src", "isCorrect": true },
+                        { "title": "href", "isCorrect": false },
+                        { "title": "url", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q7",
+                    "_id": "demo-html-q7"
+                },
+                {
+                    "title": "Which HTML tag is used to create an unordered list ?",
+                    "answers": [
+                        { "title": "<ul>", "isCorrect": true },
+                        { "title": "<ol>", "isCorrect": false },
+                        { "title": "<list>", "isCorrect": false },
+                        { "title": "<li>", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q8",
+                    "_id": "demo-html-q8"
+                },
+                {
+                    "title": "What does the <br> tag do ?",
+                    "answers": [
+                        { "title": "It breaks the text into two sections.", "isCorrect": false },
+                        { "title": "It creates a bold text.", "isCorrect": false },
+                        { "title": "It inserts a line break.", "isCorrect": true },
+                        { "title": "It adds a new row in a table.", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q9",
+                    "_id": "demo-html-q9"
+                },
+                {
+                    "title": "In HTML, what does the `fieldset` tag do ?",
+                    "answers": [
+                        { "title": "It is used to group related data in a form.", "isCorrect": true },
+                        { "title": "It sets the field to a fixed size.", "isCorrect": false },
+                        { "title": "It automatically validates the fields within a form.", "isCorrect": false },
+                        { "title": "It hides the fields in a form.", "isCorrect": false }
+                    ],
+                    "id": "demo-html-q10",
+                    "_id": "demo-html-q10"
                 }
             ],
             "__v": 2
@@ -48,7 +136,7 @@
             },
             "questions": [
                 {
-                    "title": "What does CSS stand for?",
+                    "title": "What does CSS stand for ?",
                     "answers": [
                         { "title": "Colorful Style Sheets", "isCorrect": false },
                         { "title": "Computer Style Sheets", "isCorrect": false },
@@ -59,7 +147,7 @@
                     "_id": "demo-css-q1"
                 },
                 {
-                    "title": "Which HTML attribute is used to define inline styles?",
+                    "title": "Which HTML attribute is used to define inline styles ?",
                     "answers": [
                         { "title": "styles", "isCorrect": false },
                         { "title": "style", "isCorrect": true },
@@ -70,7 +158,7 @@
                     "_id": "demo-css-q2"
                 },
                 {
-                    "title": "How do you insert a comment in a CSS file?",
+                    "title": "How do you insert a comment in a CSS file ?",
                     "answers": [
                         { "title": "// this is a comment //", "isCorrect": false },
                         { "title": "/* this is a comment */", "isCorrect": true },
@@ -81,7 +169,7 @@
                     "_id": "demo-css-q3"
                 },
                 {
-                    "title": "Which property is used to change the background color of an element?",
+                    "title": "Which property is used to change the background color of an element ?",
                     "answers": [
                         { "title": "color", "isCorrect": false },
                         { "title": "bgcolor", "isCorrect": false },
@@ -92,7 +180,7 @@
                     "_id": "demo-css-q4"
                 },
                 {
-                    "title": "How do you apply a style to all <p> elements?",
+                    "title": "How do you apply a style to all <p> elements ?",
                     "answers": [
                         { "title": "p { }", "isCorrect": true },
                         { "title": ".p { }", "isCorrect": false },
@@ -103,7 +191,7 @@
                     "_id": "demo-css-q5"
                 },
                 {
-                    "title": "Which property is used to change the font of an element?",
+                    "title": "Which property is used to change the font of an element ?",
                     "answers": [
                         { "title": "font-style", "isCorrect": false },
                         { "title": "text-style", "isCorrect": false },
@@ -114,7 +202,7 @@
                     "_id": "demo-css-q6"
                 },
                 {
-                    "title": "How do you make each word in a text start with a capital letter?",
+                    "title": "How do you make each word in a text start with a capital letter ?",
                     "answers": [
                         { "title": "text-transform: capitalize", "isCorrect": true },
                         { "title": "text-transform: uppercase", "isCorrect": false },
@@ -125,7 +213,7 @@
                     "_id": "demo-css-q7"
                 },
                 {
-                    "title": "How do you select an element with the class name 'header'?",
+                    "title": "How do you select an element with the class name 'header' ?",
                     "answers": [
                         { "title": ".header", "isCorrect": true },
                         { "title": "#header", "isCorrect": false },
@@ -136,7 +224,7 @@
                     "_id": "demo-css-q8"
                 },
                 {
-                    "title": "What is the default value of the 'position' property?",
+                    "title": "What is the default value of the 'position' property ?",
                     "answers": [
                         { "title": "relative", "isCorrect": false },
                         { "title": "fixed", "isCorrect": false },
@@ -147,7 +235,7 @@
                     "_id": "demo-css-q9"
                 },
                 {
-                    "title": "What is the purpose of the z-index property in CSS?",
+                    "title": "What is the purpose of the z-index property in CSS ?",
                     "answers": [
                         { "title": "To count the number of elements", "isCorrect": false },
                         { "title": "To set the magnification level of an element", "isCorrect": false },
@@ -172,7 +260,7 @@
             },
             "questions": [
                 {
-                    "title": "Which syntax is correct to output 'Hello World' in an alert box?",
+                    "title": "Which syntax is correct to output 'Hello World' in an alert box ?",
                     "answers": [
                         { "title": "alertBox('Hello World');", "isCorrect": false },
                         { "title": "msg('Hello World');", "isCorrect": false },
@@ -183,7 +271,7 @@
                     "_id": "demo-js-q1"
                 },
                 {
-                    "title": "How do you call a function named 'myFunction'?",
+                    "title": "How do you call a function named 'myFunction' ?",
                     "answers": [
                         { "title": "call function myFunction()", "isCorrect": false },
                         { "title": "call myFunction()", "isCorrect": false },
@@ -194,7 +282,7 @@
                     "_id": "demo-js-q2"
                 },
                 {
-                    "title": "How to write an IF statement in JavaScript?",
+                    "title": "How to write an IF statement in JavaScript ?",
                     "answers": [
                         { "title": "if i = 5 then", "isCorrect": false },
                         { "title": "if (i == 5)", "isCorrect": true },
@@ -205,7 +293,7 @@
                     "_id": "demo-js-q3"
                 },
                 {
-                    "title": "How to write an IF statement for executing some code if 'i' is NOT equal to 5?",
+                    "title": "How to write an IF statement for executing some code if 'i' is NOT equal to 5 ?",
                     "answers": [
                         { "title": "if (i <> 5)", "isCorrect": false },
                         { "title": "if i =! 5 then", "isCorrect": false },
@@ -216,7 +304,7 @@
                     "_id": "demo-js-q4"
                 },
                   {
-                    "title": "How does a FOR loop start?",
+                    "title": "How does a FOR loop start ?",
                     "answers": [
                         { "title": "for (i = 0; i <= 5)", "isCorrect": false },
                         { "title": "for i = 1 to 5", "isCorrect": false },
@@ -227,7 +315,7 @@
                     "_id": "demo-js-q5"
                 },
                 {
-                    "title": "How can you add a single-line comment in JavaScript?",
+                    "title": "How can you add a single-line comment in JavaScript ?",
                     "answers": [
                         { "title": "'This is a single-line comment", "isCorrect": false },
                         { "title": "//This is a single-line comment", "isCorrect": true },
@@ -238,7 +326,7 @@
                     "_id": "demo-js-q6"
                 },
                 {
-                    "title": "What is the correct way to write a JavaScript array?",
+                    "title": "What is the correct way to write a JavaScript array ?",
                     "answers": [
                         { "title": "var colors = (1:'red', 2:'green', 3:'blue')", "isCorrect": false },
                         { "title": "var colors = ['red', 'green', 'blue']", "isCorrect": true },
@@ -249,7 +337,7 @@
                     "_id": "demo-js-q7"
                 },
                 {
-                    "title": "How do you find the number with the highest value of x and y?",
+                    "title": "How do you find the number with the highest value of x and y ?",
                     "answers": [
                         { "title": "Math.ceil(x, y)", "isCorrect": false },
                         { "title": "top(x, y)", "isCorrect": false },
@@ -260,7 +348,7 @@
                     "_id": "demo-js-q8"
                 },
                 {
-                    "title": "Which operator is used to assign a value to a variable?",
+                    "title": "Which operator is used to assign a value to a variable ?",
                     "answers": [
                         { "title": "-", "isCorrect": false },
                         { "title": "*", "isCorrect": false },
@@ -271,7 +359,7 @@
                     "_id": "demo-js-q9"
                 },
                 {
-                    "title": "What is the correct way to write a JavaScript object?",
+                    "title": "What is the correct way to write a JavaScript object ?",
                     "answers": [
                         { "title": "var person = {firstName: 'John', lastName: 'Doe'};", "isCorrect": true },
                         { "title": "var person = {firstName = 'John', lastName = 'Doe'};", "isCorrect": false },
@@ -296,7 +384,7 @@
             },
             "questions": [
                 {
-                    "title": "What does 'WCAG' stand for?",
+                    "title": "What does 'WCAG' stand for ?",
                     "answers": [
                         { "title": "Web Content Accessibility Guidelines", "isCorrect": true },
                         { "title": "Web Compliance Accessibility Guide", "isCorrect": false },
@@ -307,7 +395,7 @@
                     "_id": "demo-a11y-q1"
                 },
                 {
-                    "title": "Which element is used to provide alternative text for images for screen reader users?",
+                    "title": "Which element is used to provide alternative text for images for screen reader users ?",
                     "answers": [
                         { "title": "<alt>", "isCorrect": false },
                         { "title": "<figcaption>", "isCorrect": false },
@@ -318,7 +406,7 @@
                     "_id": "demo-a11y-q2"
                 },
                 {
-                    "title": "What does ARIA stand for in web development?",
+                    "title": "What does ARIA stand for in web development ?",
                     "answers": [
                         { "title": "Accessible Rich Internet Applications", "isCorrect": true },
                         { "title": "Advanced Responsive Internet Assistance", "isCorrect": false },
@@ -329,7 +417,7 @@
                     "_id": "demo-a11y-q3"
                 },
                 {
-                    "title": "Which of the following is not a principle of the WCAG?",
+                    "title": "Which of the following is not a principle of the WCAG ?",
                     "answers": [
                         { "title": "Perceivable", "isCorrect": false },
                         { "title": "Dependable", "isCorrect": true },
@@ -340,7 +428,7 @@
                     "_id": "demo-a11y-q4"
                 },
                 {
-                    "title": "Which of these color contrast ratios defines the minimum WCAG 2.1 Level AA requirement for normal text?",
+                    "title": "Which of these color contrast ratios defines the minimum WCAG 2.1 Level AA requirement for normal text ?",
                     "answers": [
                         { "title": "3:1", "isCorrect": false },
                         { "title": "4.5:1", "isCorrect": true },
@@ -351,7 +439,7 @@
                     "_id": "demo-a11y-q5"
                 },
                 {
-                    "title": "Which of the following elements is inherently focusable, meaning it can receive focus without a 'tabindex' attribute?",
+                    "title": "Which of the following elements is inherently focusable, meaning it can receive focus without a 'tabindex' attribute ?",
                     "answers": [
                         { "title": "<div>", "isCorrect": false },
                         { "title": "<span>", "isCorrect": false },
@@ -362,7 +450,7 @@
                     "_id": "demo-a11y-q6"
                 },
                 {
-                    "title": "What is the purpose of the 'lang' attribute in an HTML page?",
+                    "title": "What is the purpose of the 'lang' attribute in an HTML page ?",
                     "answers": [
                         { "title": "To specify the scripting language", "isCorrect": false },
                         { "title": "To define the character set", "isCorrect": false },
@@ -373,7 +461,7 @@
                     "_id": "demo-a11y-q7"
                 },
                 {
-                    "title": "Which guideline ensures that content is accessible by keyboard as well as by mouse?",
+                    "title": "Which guideline ensures that content is accessible by keyboard as well as by mouse ?",
                     "answers": [
                         { "title": "Keyboard Accessible", "isCorrect": true },
                         { "title": "Mouse Independence", "isCorrect": false },
@@ -384,7 +472,7 @@
                     "_id": "demo-a11y-q8"
                 },
                 {
-                    "title": "What is the role of 'skip navigation' links in web accessibility?",
+                    "title": "What is the role of 'skip navigation' links in web accessibility ?",
                     "answers": [
                         { "title": "To skip over primary navigation to the main content", "isCorrect": true },
                         { "title": "To provide shortcuts to different sections of the website", "isCorrect": false },
@@ -395,7 +483,7 @@
                     "_id": "demo-a11y-q9"
                 },
                 {
-                    "title": "Which of these tools can help in checking the accessibility of a website?",
+                    "title": "Which of these tools can help in checking the accessibility of a website ?",
                     "answers": [
                         { "title": "W3C Validator", "isCorrect": false },
                         { "title": "Google Lighthouse", "isCorrect": true },

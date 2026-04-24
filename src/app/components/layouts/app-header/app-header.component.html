@@ -1,0 +1,38 @@
+<header class="app-header">
+  <div
+    class="app-header__inner-container"
+    [class.app-header__inner-container--with-meta]="showQuizMeta"
+  >
+    @if (showQuizMeta) {
+      <div class="app-header__content-texts">
+        @if (quizIcon) {
+          <img class="app-header__icon" [src]="quizIcon" [alt]="quizTitle" />
+        }
+        <h2 class="app-header__title">{{ quizTitle || 'Quiz' }}</h2>
+      </div>
+    }
+    <div class="app-header__content-theme-switch">
+      <img
+        class="app-header__switch-icon"
+        src="assets/icons/icon-sun-dark.svg"
+        alt=""
+        aria-hidden="true"
+      />
+      <label class="app-header__switch" aria-label="Toggle theme">
+        <input
+          class="app-header__switch-input"
+          type="checkbox"
+          [checked]="isDarkMode"
+          (change)="onToggle($event)"
+        />
+        <span class="app-header__switch-slider"></span>
+      </label>
+      <img
+        class="app-header__switch-icon"
+        src="assets/icons/icon-moon-dark.svg"
+        alt=""
+        aria-hidden="true"
+      />
+    </div>
+  </div>
+</header>

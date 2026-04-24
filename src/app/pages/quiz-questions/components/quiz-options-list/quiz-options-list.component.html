@@ -17,9 +17,7 @@
       type="button"
       class="quiz-options-list__submit-button"
       [disabled]="
-        isSubmitting ||
-        isSubmitted ||
-        (!isSubmitted && !selectedAnswerTitle)
+        isSubmitted || (!isSubmitted && !selectedAnswerTitle)
       "
       (click)="onSubmitOrNext()"
     >
@@ -33,7 +31,7 @@
     <button
       type="button"
       class="quiz-options-list__submit-button"
-      [disabled]="!selectedAnswerTitle || isSubmitting"
+      [disabled]="!selectedAnswerTitle"
       (click)="onSubmitOrNext()"
     >
       {{

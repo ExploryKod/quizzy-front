@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,38 +10,29 @@ import {
   QuizOptionsListComponent,
 } from './components/quiz-options-list/quiz-options-list.component';
 import { QuizScoreCardComponent } from './components/quiz-score-card/quiz-score-card.component';
-import { QuizQuestionsBannerComponent } from './components/quiz-questions-banner/quiz-questions-banner';
+import { HeaderUiService } from '../../services/header-ui.service';
 
 @Component({
   selector: 'qzy-quiz-questions-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    TranslateModule,
-    QuizQuestionsBannerComponent,
-    QuizOptionsListComponent,
-    QuizScoreCardComponent,
-  ],
+  imports: [CommonModule, TranslateModule, QuizOptionsListComponent, QuizScoreCardComponent],
   templateUrl: './quiz-questions.components.html',
   styleUrl: './quiz-questions.component.scss',
 })
-export class QuizQuestionsComponent implements OnInit {
+export class QuizQuestionsComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly quizService = inject(QuizService);
+  private readonly headerUiService = inject(HeaderUiService);
 
   quiz: Quiz | null = null;
   currentQuestionIndex = 0;
   showScoreCard = false;
   finalScore = { correct: 0, total: 0 };
-  isDarkMode = false;
   loadErrorKey: 'quizQuestions.notReadyYet' | 'quizQuestions.noAnswers' | null =
     null;
 
   ngOnInit(): void {
-    this.isDarkMode = localStorage.getItem('quiz-theme') === 'dark';
-    this.applyThemeMode(this.isDarkMode);
-
     const routeQuizId = this.route.snapshot.paramMap.get('id');
     if (routeQuizId) {
       this.loadQuizById(routeQuizId);
@@ -53,6 +44,10 @@ export class QuizQuestionsComponent implements OnInit {
         return;
       }
       this.quiz = response.data[0];
+      this.headerUiService.setQuizMeta({
+        title: this.quiz.title,
+        icon: this.quiz.icon || 'assets/icons/icon-html.svg',
+      });
       this.currentQuestionIndex = 0;
       this.showScoreCard = false;
       this.loadErrorKey = null;
@@ -110,12 +105,6 @@ export class QuizQuestionsComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  onThemeModeChange(isDarkMode: boolean) {
-    this.isDarkMode = isDarkMode;
-    localStorage.setItem('quiz-theme', isDarkMode ? 'dark' : 'light');
-    this.applyThemeMode(isDarkMode);
-  }
-
   private loadQuizById(quizId: string) {
     this.quizService.get(quizId).subscribe((response) => {
       if (response.status !== 'OK' || !response.data) {
@@ -129,6 +118,10 @@ export class QuizQuestionsComponent implements OnInit {
       }
 
       this.quiz = response.data;
+      this.headerUiService.setQuizMeta({
+        title: this.quiz.title,
+        icon: this.quiz.icon || 'assets/icons/icon-html.svg',
+      });
       this.currentQuestionIndex = 0;
       this.showScoreCard = false;
       this.loadErrorKey = null;
@@ -144,7 +137,7 @@ export class QuizQuestionsComponent implements OnInit {
     );
   }
 
-  private applyThemeMode(isDarkMode: boolean): void {
-    document.body.classList.toggle('quiz-theme-dark', isDarkMode);
+  ngOnDestroy(): void {
+    this.headerUiService.clearQuizMeta();
   }
 }

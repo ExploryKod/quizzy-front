@@ -23,21 +23,21 @@ body {
 }
 
 /* Page-scoped background (body class is set at runtime in AppComponent). */
-body.page-home, body.page-join, body.page-my-quizzes {
+body.page-home, body.page-join, body.page-my-quizzes, body.page-quiz-questions {
   background-image: url('/assets/patterns/pattern-background-mobile-light.svg');
   background-repeat: no-repeat;
   background-position: center top;
 }
 
 @include bp.media-breakpoint-up(md) {
-  body.page-home, body.page-join, body.page-my-quizzes {
+  body.page-home, body.page-join, body.page-my-quizzes, body.page-quiz-questions {
     background-image: url('/assets/patterns/pattern-background-tablet-light.svg');
     background-position: center center;
   }
 }
 
 @include bp.media-breakpoint-up(lg) {
-  body.page-home, body.page-join, body.page-my-quizzes {
+  body.page-home, body.page-join, body.page-my-quizzes, body.page-quiz-questions {
     background-image: url('/assets/patterns/pattern-background-desktop-light.svg');
   }
 }
