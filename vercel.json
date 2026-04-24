@@ -4,14 +4,14 @@
     "buildCommand": "pnpm run build",
     "outputDirectory": "dist/quizzy-front/browser",
     "installCommand": "pnpm install --frozen-lockfile",
-    "rewrites": [
+  "rewrites": [
     {
       "source": "/api/(.*)",
       "destination": "http://194.164.76.63:3002/api/$1"
     },
-      {
-        "source": "/(.*)",
-        "destination": "/index.html"
-      }
-    ]
+    {
+      "source": "/((?!api/|.*\\..*).*)",
+      "destination": "/index.html"
+    }
+  ]
   }
