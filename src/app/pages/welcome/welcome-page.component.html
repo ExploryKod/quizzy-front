@@ -2,7 +2,7 @@
   <div class="welcome-page__intro">
     <div class="welcome-page__text-wrapper">
       <h1 class="welcome-page__title">
-       {{ 'welcomePage.pretitle' | translate }}
+       {{ 'welcomePage.pretitle' | translate }}<br/>
        <span class="welcome-page__end-title">{{ 'welcomePage.title' | translate }}</span>
       </h1>
       <div class="welcome-page__description">
@@ -17,12 +17,11 @@
           <p class="welcome-page__empty-state">{{ 'welcomePage.noQuizAvailable' | translate }}</p>
         }
       }
-
-      @if (isLogged$ | async) {
-        <button type="button" class="welcome-page__submit-button" routerLink="/my-quizzes">
-          {{ 'welcomePage.goToMyQuizzes' | translate }}
-        </button>
-      }
     </div>
+    @if (isLogged$ | async) {
+      <button type="button" class="welcome-page__submit-button" routerLink="/my-quizzes">
+        {{ 'welcomePage.goToMyQuizzes' | translate }}
+      </button>
+    }
   </div>
 </div>
